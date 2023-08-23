@@ -2431,13 +2431,9 @@ html =
                     <button class="button defaultbutton" id="resetButton" type="button">Reset to default</button>
                 </span>
 				<div style="padding: 0 0 10px 0;text-align:left;">
-					<span class="lighttext" style="margin:0 0 0 13px;">A delay between 2500~2800ms is recommended. This delay is added to a 500ms anti-afk delay.</span>
+					<span class="lighttext" style="margin:0 0 0 13px;">A delay between 2500~2800ms is advised. This delay is added to a 500ms anti-afk delay.</span>
 				</div>
             </div>
-			<div class="checkbox">
-				<input type="checkbox" id="overlayCheckbox" name="overlayCheckbox">
-				<label for="overlayCheckbox">Enable overlay</label>
-			</div>
         </fieldset>
 			<div class="row">
 				<p class="alerttext" id="alert1"></p>
@@ -2451,6 +2447,11 @@ html =
 		 	<div class="signature">
 		  		<p>With <i class="much-heart"></i> from <a href="#" onclick="ahk.antraClicked(event)">Antra</a> - <a href="#" onclick="ahk.discordClicked(event)">Join our Discord</a> for support and more scripts!</p>
 	  		</div>
+			  <div style="padding:0;text-align:center;">
+				<span class="lighttext">You can track your xp gain in the #xp-hub channel in the discord.</span>
+				<br>
+				<span class="lighttext">Checkpoint bot: /join CPBot#6289</span>
+			</div>
     </form>
 </body>
 
@@ -2918,7 +2919,6 @@ Submitted(neutron, event)
     global reloadInput := formData.reloadInput
     global startInput := formData.startInput
     global timeInput := formData.timeInput
-    global overlayCheckbox := formData.overlayCheckbox
     gosub, writetoini
 }
 Return
@@ -2929,7 +2929,6 @@ readfromini:
 	iniread, reloadInput, xpStuff.ini, xpScriptBinds, reloadInput, F5
 	iniread, startInput, xpStuff.ini, xpScriptBinds, startInput, F4
 	iniread, timeInput, xpStuff.ini, xpScriptDelays, timeInput, 2600
-	iniread, overlayCheckbox, xpStuff.ini, xpScriptMisc, overlayCheckbox, "on"
 
 	iniread, initialOpen, xpStuff.ini, xpScriptMisc, initialOpen, 0
 
@@ -2939,13 +2938,12 @@ readfromini:
 	neutron.doc.getElementById("startInput").value := startInput
 	neutron.doc.getElementById("timeInput").value := timeInput
 
-	neutron.doc.getElementById("overlayCheckbox").checked := overlayCheckbox
 
 
 	if (menuInput == closeInput || menuInput == reloadInput || menuInput == startInput || closeInput == reloadInput || closeInput == startInput || reloadInput == startInput) {
 		neutron.doc.getElementById("alert1").innertext := "You have overlapping binds!"
 		show = 1
-		neutron.Show("h400")
+		neutron.Show("h380")
 		if (!A_IsSuspended) {
 			Suspend, Toggle
 		}
@@ -2974,7 +2972,6 @@ writetoini:
     iniwrite, %reloadInput%, xpStuff.ini, xpScriptBinds, reloadInput
     iniwrite, %startInput%, xpStuff.ini, xpScriptBinds, startInput
     iniwrite, %timeInput%, xpStuff.ini, xpScriptDelays, timeInput
-	iniwrite, %overlayCheckbox%, xpStuff.ini, xpScriptMisc, overlayCheckbox
 
 	if (initialOpen = 0) {
 		initialOpen = 1
@@ -2992,7 +2989,7 @@ return
 UpdateOverlay:
 	WinGetPos, x, y, w, h, ahk_exe destiny2.exe
 	font_size := h/32
-	if (overlay.beginDraw() && overlayCheckbox = "on") { 
+	if (overlay.beginDraw()) { 
 		inputs := "| " menuInput " - Menu | " closeInput " - Close | discord.gg/KGyjysA5WY"
 		switch status {
 			case 0:
@@ -3008,7 +3005,7 @@ menu_bind:
     Suspend, Permit
     if (!show) {
         show = 1
-        neutron.Show("h400")
+        neutron.Show("h380")
         if (!A_IsSuspended) {
             Suspend, Toggle
         }
