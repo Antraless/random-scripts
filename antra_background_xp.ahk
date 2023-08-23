@@ -2402,9 +2402,9 @@ html =
                 <h2>XP Script Settings</h2>
             </legend>
             <div class="row" style="padding:0;">
-			<div style="padding: 0 0 10px 0;text-align:left;">
-				<span class="lighttext" style="margin:0 0 0 13px;">Binds set here will only work while D2 is active.</span>
-			</div>
+				<div style="padding: 0 0 5px 0;text-align:center;">
+					<span class="lighttext">Binds set here will only work while D2 is active.</span>
+				</div>
                 <span>
                     <input class="balloon" id="menuInput" type="text" readonly>
                     <label for="menuInput">Menu</label>
@@ -2430,7 +2430,7 @@ html =
                 <span>
                     <button class="button defaultbutton" id="resetButton" type="button">Reset to default</button>
                 </span>
-				<div style="padding: 0 0 10px 0;text-align:left;">
+				<div style="padding: 5px 0 0 0;text-align:center;">
 					<span class="lighttext" style="margin:0 0 0 13px;">A delay between 2500~2800ms is advised. This delay is added to a 500ms anti-afk delay.</span>
 				</div>
             </div>
