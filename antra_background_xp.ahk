@@ -2399,7 +2399,7 @@ html =
     <form id="xpform" onsubmit="ahk.Submitted(event)">
         <fieldset>
             <legend>
-                <h2>XP Script Binds</h2>
+                <h2>XP Script Settings</h2>
             </legend>
             <div class="row" style="padding:0;">
 			<div style="padding: 0 0 10px 0;text-align:left;">
