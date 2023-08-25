@@ -3,6 +3,7 @@
 #ifwinactive ahk_exe destiny2.exe
 sendmode input
 SetBatchLines, -1 ; never automatically sleep.
+SetWorkingDir %A_ScriptDir%
 
 
 if FileExist("ViGEmWrapper.dll") {
@@ -15,7 +16,7 @@ else  {
 		msgbox,0x30,Antra's Background XP Script, Something went wrong while trying to install required files.`n`nPlease join https://discord.gg/KGyjysA5WY for support.`n`nThe script will now close itself.
 	}
 	else {
-		msgbox,0x40,Antra's Background XP Script, Required files downloaded!`n`nPlease run ViGEmBus_1.21.442_x64_x86_arm64.exe to install ViGEmBus, then open this script (antra_background_xp_movement) again.
+		msgbox,0x40,Antra's Background XP Script, Required files downloaded!`n`nPlease run ViGEmBus_1.21.442_x64_x86_arm64.exe to install ViGEmBus, then open this script (antra_background_xp) again.
 	}
 	exitapp
 }
@@ -28,7 +29,6 @@ else  {
 ;   Author:     Lexikos
 ;   Version:    1.2
 ;   Requires:	AutoHotkey_L v1.0.96+
-;   EDITED by Antra, this is not the original - do not reuse expecting that to be the case.
 ;
 CLR_LoadLibrary(AssemblyName, AppDomain=0)
 {
@@ -297,14 +297,12 @@ class ViGEmXb360 extends ViGEmTarget {
 ;      https://github.com/Spawnova/ShinsOverlayClass
 ; ==========================================================
 ;
-;   author: spawnova
-;  
+;   Author: Spawnova
+;   
 ;
 ; Direct2d overlay class by Spawnova (5/27/2022)
 ; https://github.com/Spawnova/ShinsOverlayClass
 ;
-; I'm not a professional programmer, I do this for fun, if it doesn't work for you I can try and help
-; but I can't promise I will be able to solve the issue
 ;
 ; Special thanks to teadrinker for helping me understand some 64bit param structures! -> https://www.autohotkey.com/boards/viewtopic.php?f=76&t=105420
 
@@ -2398,13 +2396,10 @@ html =
 	<body>
     <form id="xpform" onsubmit="ahk.Submitted(event)">
         <fieldset>
-            <legend>
+            <legend align="center">
                 <h2>XP Script Settings</h2>
             </legend>
             <div class="row" style="padding:0;">
-				<div style="padding: 0 0 5px 0;text-align:center;">
-					<span class="lighttext">Binds set here will only work while D2 is active.</span>
-				</div>
                 <span>
                     <input class="balloon" id="menuInput" type="text" readonly>
                     <label for="menuInput">Menu</label>
@@ -2423,15 +2418,15 @@ html =
                     <input class="balloon" id="startInput" type="text" readonly>
                     <label for="startInput">Start</label>
                 </span>
-                <span>
-                    <input class="balloon" id="timeInput" type="text" oninput="validateInput(this)">
-                    <label for="timeInput">Delay</label>
-                </span>
+				<div style="display:inline-block;position:relative;margin:0 10px;">
+					<input class="balloon" id="timeInput" type="text" value="1500" oninput="validateInput(this)">
+					<label for="timeInput">Delay</label><span style="position:absolute;width:70px;top:11px;margin-left:-107px;">+ 500ms</span>
+				</div>
                 <span>
                     <button class="button defaultbutton" id="resetButton" type="button">Reset to default</button>
                 </span>
 				<div style="padding: 5px 0 0 0;text-align:center;">
-					<span class="lighttext" style="margin:0 0 0 13px;">A delay between 2500~2800ms is advised. This delay is added to a 500ms anti-afk delay.</span>
+					<span class="lighttext" style="margin:0 0 0 13px;">A delay between 2400~2900ms is advised. The additional 500ms delay is for anti-afk.</span>
 				</div>
             </div>
         </fieldset>
@@ -2444,13 +2439,22 @@ html =
 					<button class="button bigbutton" id="saveButton" type="submit">Save/Reload</button>
 				</span>
 			</div>
-		 	<div class="signature">
-		  		<p>With <i class="much-heart"></i> from <a href="#" onclick="ahk.antraClicked(event)">Antra</a> - <a href="#" onclick="ahk.discordClicked(event)">Join our Discord</a> for support and more scripts!</p>
-	  		</div>
-			  <div style="padding:0;text-align:center;">
-				<span class="lighttext">You can track your xp gain in the #xp-hub channel in the discord.</span>
-				<br>
-				<span class="lighttext">Checkpoint bot: /join CPBot#6289</span>
+
+			<div style="padding-top:5px;text-align:center;">
+				<span class="lighttext">Checkpoint bot: <a id="copyJoinCode" href="#">/join CPBot#6289</a> - Bot's down or full? Ask in our Discord!</span>
+			</div>
+			<div id="myModal" class="modal">
+				<div class="modal-content">
+					<p>Join code copied to clipboard!</p>
+				</div>
+			</div>
+
+			<div class="signature" style="padding-top:5px;">
+				<p>			
+				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+					<path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+			 	</svg>
+				from <a href="#" onclick="ahk.antraClicked(event)">Antra</a> - <a href="#" onclick="ahk.discordClicked(event)">Join our Discord</a> for support and more scripts!</p>
 			</div>
     </form>
 </body>
@@ -2462,186 +2466,165 @@ html =
 css =
 (
 
-tr {
-	color:#EEE;
-}
-.signature {
-	width: 100`%;
-}
+	.modal {
+		display: none;
+		position: fixed;
+		z-index: 1;
+		padding-top: 80px; 
+		left: 0;
+		top: 0;
+		width: 100`%;
+		height: 100`%; 
+		overflow: auto; 
+		background-color: rgba(0,0,0,0.4); 
+	}
 
+	/* Modal Content */
+	.modal-content {
+		text-align:center;
+		background-color: #393E46;
+		color:white;
+		margin: auto;
+		font-size:2.5em;
+		border: 2px solid rgba(0, 173, 181, 0.5);
+		width: 80`%;
+	}
+
+	.signature {
+		width: 100`%;
+   }
+	.signature a, #copyJoinCode {
+		color:#FFF;
+		transition: color .8s;
+		text-decoration:none;
+		font-weight:bold;
+   }
+	.signature a:hover #copyJoinCode:hover {
+		color: #2282e4;
+   }
 	.signature p {
 		padding:0;
 		margin:auto 0 0 0;
 		text-align: center;
 		font-size: 1em;
 		color: #AAA;
-	}
-
-	.signature .much-heart{
-		display: inline-block;
-		position: relative;
-		margin: 0 4px;
-		height: 10px;
-		width: 10px;
-		background: #AC1D3F;
-		border-radius: 4px;
-		-ms-transform: rotate(45deg);
-		-webkit-transform: rotate(45deg);
-		transform: rotate(45deg);
-	}
-
-	.signature .much-heart::before, 
-	.signature .much-heart::after {
-		display: block;
-		content: '';
-		position: absolute;
-		margin: auto;
-		height: 10px;
-		width: 10px;
-		border-radius: 5px;
-		background: #AC1D3F;
-		top: -4px;
-	}
-
-	.signature .much-heart::after {
-		bottom: 0;
-		top: auto;
-		left: -4px;
-	}
-
-
-
-	/* General Styles */
+   }
+	.signature svg {
+		padding-top:3px;
+		width:1.1em;
+		height:1.1em;
+		fill:#BE1931;
+   }
 	* {
-	  box-sizing: border-box;
-	}
-	
+		box-sizing: border-box;
+   }
 	body {
 		min-height: 100vh;
 		display: flex;
 		flex-direction: column;
-	  margin: 0;
-	  padding: 0;
-	  font-family: "Open Sans", sans-serif;
-	  font-weight: 300;
-	  color: #fff;
-	  background: #393E46;
-	}
-	
+		margin: 0;
+		padding: 0;
+		font-family: "Open Sans", sans-serif;
+		font-weight: 300;
+		color: #fff;
+		background: #393E46;
+   }
 	header {
-	  background: #222831;
-	  color: white;
-	}
-	
+		background: #222831;
+		color: white;
+   }
 	h2 {
+		text-align:center;
 		font-size:1.3em;
-	  margin: 0;
-	  padding: 0;
-	}
-	
-	/* Form Styles */
+		margin: 0;
+		padding: 0;
+   }
 	fieldset {
-	  border: 2px solid rgba(0, 173, 181, 0.5);
-	}
-	
+		border: 2px solid rgba(0, 173, 181, 0.5);
+   }
 	legend {
-	  color: #EEE;
-	}
-	
+		color: #EEE;
+		text-align:center;
+   }
 	table {
 		margin:5px auto;
 		table-layout: fixed;
-	}
-
+   }
 	.alerttext {
 		margin:5px 0;
-	  font-size: 0.9em;
-	  padding:0;
-	  font-weight: 700;
-	  color: #f00;
-	  text-align: center;
-	}
-	
+		font-size: 0.9em;
+		padding:0;
+		font-weight: 700;
+		color: #f00;
+		text-align: center;
+   }
 	.lighttext {
-	  color: #AAA !important;
-	}
-	
-	/* Checkbox Styles */
+		color: #AAA !important;
+   }
 	.checkbox {
-	  display: block;
-	  width:150px;
-	  position: relative;
-	  cursor: pointer;
-	  margin-bottom: 8px;
-	}
-	
+		display: block;
+		width:150px;
+		position: relative;
+		cursor: pointer;
+		margin-bottom: 8px;
+   }
 	.checkbox input[type="checkbox"] {
-	  position: absolute;
-	  display: block;
-	  top: 0;
-	  left: 0;
-	  height: 100`%;
-	  width: 100`%;
-	  cursor: pointer;
-	  margin: 0;
-	  opacity: 0;
-	  z-index: 1;
-	}
-	
+		position: absolute;
+		display: block;
+		top: 0;
+		left: 0;
+		height: 100`%;
+		width: 100`%;
+		cursor: pointer;
+		margin: 0;
+		opacity: 0;
+		z-index: 1;
+   }
 	.checkbox label {
-	  display: inline-block;
-	  vertical-align: top;
-	  text-align: left;
-	  padding-left: 1.5em;
-	  color: #EEE;
-	  z-index: 10;
-	}
-	
+		display: inline-block;
+		vertical-align: top;
+		text-align: left;
+		padding-left: 1.5em;
+		color: #EEE;
+		z-index: 10;
+   }
 	.checkbox label:before {
-	  content: '';
-	  display: block;
-	  position: absolute;
-	  left: 0;
-	  top: 0;
-	  width: 18px;
-	  height: 18px;
-	  margin-right: 10px;
-	  background: #ddd;
-	  border-radius: 3px;
-	}
-	
+		content: '';
+		display: block;
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 18px;
+		height: 18px;
+		margin-right: 10px;
+		background: #ddd;
+		border-radius: 3px;
+   }
 	.checkbox label:after {
-	  content: '';
-	  display: block;
-	  position: absolute;
-	  top: 4px;
-	  left: 4px;
-	  width: 10px;
-	  height: 10px;
-	  border-radius: 2px;
-	  background: #00ADB5;
-	  opacity: 0;
-	  pointer-events: none;
-	}
-	
+		content: '';
+		display: block;
+		position: absolute;
+		top: 4px;
+		left: 4px;
+		width: 10px;
+		height: 10px;
+		border-radius: 2px;
+		background: #00ADB5;
+		opacity: 0;
+		pointer-events: none;
+   }
 	.checkbox input:checked ~ label:after {
-	  opacity: 1;
-	}
-	
+		opacity: 1;
+   }
 	.checkbox input:focus ~ label:before {
-	  background: #eee;
-	}
-	
+		background: #eee;
+   }
 	#brightnessInput {
-	  text-indent: 90px;
-	}
-	
-	#brightnessInput:focus,
-	#brightnessInput:active,
-	#brightnessInput:hover {
-	  text-indent: 0;
-	}
-
+		text-indent: 90px;
+   }
+	#brightnessInput:focus, #brightnessInput:active, #brightnessInput:hover {
+		text-indent: 0;
+   }
 	.mini-balloon {
 		display: inline-block;
 		z-index: 999;
@@ -2654,9 +2637,8 @@ tr {
 		border: 0;
 		border-radius: 3px;
 		outline: 0;
-	  }
-	  
-	  .balloon {
+   }
+	.balloon {
 		display: inline-block;
 		width: 215px;
 		padding: 11px 0 10px 15px;
@@ -2670,9 +2652,8 @@ tr {
 		border-radius: 3px;
 		outline: 0;
 		transition: all 0.3s ease-in-out;
-	  }
-	  
-	  .balloon + label {
+   }
+	.balloon + label {
 		display: inline-block;
 		position: absolute;
 		top: 8px;
@@ -2687,9 +2668,8 @@ tr {
 		text-shadow: 0 1px 0 rgba(19, 74, 70, 0);
 		transition: all 0.3s ease-in-out;
 		background: rgba(0, 173, 181, 0.5);
-	  }
-	  
-	  .balloon + label:after {
+   }
+	.balloon + label:after {
 		position: absolute;
 		content: "";
 		width: 0;
@@ -2701,112 +2681,111 @@ tr {
 		border-right: 3px solid transparent;
 		border-top: 3px solid rgba(0, 173, 181, 0);
 		transition: all 0.3s ease-in-out;
-	  }
-	  
-	  .balloon:focus,
-	  .balloon:active {
+   }
+	.balloon:focus, .balloon:active {
 		color: #EEE;
 		text-indent: 0;
 		background: #2D333B;
-	  }
-	  
-	  .balloon:hover {
+   }
+	.balloon:hover {
 		text-indent: 0;
-	  }
-	  
-	  .balloon:focus::placeholder,
-	  .balloon:active::placeholder,
-	  .balloon:hover::placeholder {
+   }
+	.balloon:focus::placeholder, .balloon:active::placeholder, .balloon:hover::placeholder {
 		color: #aaa;
-	  }
-	  
-	  .balloon:focus + label,
-	  .balloon:active + label,
-	  .balloon:hover + label {
+   }
+	.balloon:focus + label, .balloon:active + label, .balloon:hover + label {
 		color: #fff;
 		text-shadow: 0 1px 0 rgba(19, 74, 70, 0.5);
 		background: #00ADB5;
 		transform: translateY(-40px);
-	  }
-	  
-	  .balloon:focus + label:after,
-	  .balloon:active + label:after,
-	  .balloon:hover + label:after {
+   }
+	.balloon:focus + label:after, .balloon:active + label:after, .balloon:hover + label:after {
 		border-top: 4px solid #00ADB5;
-	  }
-	
-	/* Button Styles */
+   }
 	.button {
-	  background-color: #00ADB5;
-	  width: 215px;
-	  position: relative;
-	  padding: 11px 0;
-	  top: -3px;
-	  text-align: center;
-	  text-decoration: none;
-	  display: inline-block;
-	  font-size: 1em;
-	  border-radius: 3px;
-	  outline: 0;
-	  transition-duration: 0.4s;
-	  cursor: pointer;
-	}
-	
+		background-color: #00ADB5;
+		width: 215px;
+		position: relative;
+		padding: 11px 0;
+		top: -3px;
+		text-align: center;
+		text-decoration: none;
+		display: inline-block;
+		font-size: 1em;
+		border-radius: 3px;
+		outline: 0;
+		transition-duration: 0.4s;
+		cursor: pointer;
+   }
 	.defaultbutton {
-	  background-color: #222831;
-	  color: #EEE;
-	  border: 2px solid rgba(0, 173, 181, 0.5);
-	}
-	
+		background-color: #222831;
+		color: #EEE;
+		border: 2px solid rgba(0, 173, 181, 0.5);
+   }
 	.defaultbutton:hover {
-	  background-color: #00ADB5;
-	  color: white;
-	}
-	
+		background-color: #00ADB5;
+		color: white;
+   }
 	.bigbutton {
 		font-size:1.3em;
 		margin: 5px 0 0 0;
-	  background-color: #222831;
-	  color: #EEEEEE;
-	  border: 2px solid rgba(0, 173, 181, 0.5);
-	}
-	
+		background-color: #222831;
+		color: #EEEEEE;
+		border: 2px solid rgba(0, 173, 181, 0.5);
+   }
 	.bigbutton:hover {
-	  background-color: #00ADB5;
-	  color: white;
-	}
-	
-	/* Miscellaneous Styles */
+		background-color: #00ADB5;
+		color: white;
+   }
 	.row {
-	  margin: 0;
-	  max-width: 800px;
-	  position: relative;
-	  z-index: 1;
-	  text-align: center;
-	}
-	
+		margin: 0;
+		max-width: 800px;
+		position: relative;
+		z-index: 1;
+		text-align: center;
+   }
 	.row:before {
-	  position: absolute;
-	  content: "";
-	  display: block;
-	  top: 0;
-	  left: -5000px;
-	  height: 100`%;
-	  z-index: -1;
-	  background: inherit;
-	}
-	
+		position: absolute;
+		content: "";
+		display: block;
+		top: 0;
+		left: -5000px;
+		height: 100`%;
+		z-index: -1;
+		background: inherit;
+   }
 	.row span {
-	  position: relative;
-	  display: inline-block;
-	  margin: 0 10px;
-	}
-	
-	
+		position: relative;
+		display: inline-block;
+		margin: 0 10px;
+   }   
 )
 
 js =
 (
+
+document.getElementById("copyJoinCode").addEventListener("click", function(event) {
+    event.preventDefault();
+    const textToCopy = event.target.textContent;
+    
+    const tempInput = document.createElement("input");
+    tempInput.style.position = "absolute";
+    tempInput.style.left = "-1000px";
+    tempInput.value = textToCopy;
+    document.body.appendChild(tempInput);
+    
+    tempInput.select();
+    document.execCommand("copy");
+    
+    document.body.removeChild(tempInput);
+    
+    const modal = document.getElementById("myModal");
+    modal.style.display = "block";
+    
+    setTimeout(function() {
+        modal.style.display = "none";
+    }, 2000);
+});
 
 window.addEventListener("beforeunload", function (event) {
 	event.preventDefault();
@@ -2830,7 +2809,7 @@ window.addEventListener("beforeunload", function (event) {
   
 	const num = parseInt(input.value, 10);
 	if (isNaN(num)) {
-	  input.value = '';
+	  input.value = "";
 	} else {
 	  input.value = Math.min(9999, num);// Clamp the value to a maximum of 9999
 	}
@@ -2871,7 +2850,7 @@ window.addEventListener("beforeunload", function (event) {
   });  
 )
 
-title = Antra's Tabbed Out XP Script v1.0.0
+title = Antra's Tabbed Out XP Script v1.0.1
 
 neutron := new NeutronWindow(html, css, js, title)
 neutron.Gui("+LabelNeutron +AlwaysOnTop")
@@ -2943,7 +2922,7 @@ readfromini:
 	if (menuInput == closeInput || menuInput == reloadInput || menuInput == startInput || closeInput == reloadInput || closeInput == startInput || reloadInput == startInput) {
 		neutron.doc.getElementById("alert1").innertext := "You have overlapping binds!"
 		show = 1
-		neutron.Show("h380")
+		neutron.Show("h330")
 		if (!A_IsSuspended) {
 			Suspend, Toggle
 		}
@@ -3005,7 +2984,7 @@ menu_bind:
     Suspend, Permit
     if (!show) {
         show = 1
-        neutron.Show("h380")
+        neutron.Show("h330")
         if (!A_IsSuspended) {
             Suspend, Toggle
         }
