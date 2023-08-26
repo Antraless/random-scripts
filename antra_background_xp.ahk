@@ -2440,7 +2440,7 @@ html =
 				</span>
 				<div id="titan_build_info_modal" class="modal">
 					<div class="modal-content">
-						<h2>Titan Build Info</h2>
+						<h2 style="font-size:1.5em">Titan Build Info</h2>
 						<p><span style="font-weight:900;">Exotic:</span>Ashens Wake</p>
 						<p><span style="font-weight:900;">Grenade:</span>Fusion Grenade</p>
 						<p><span style="font-weight:900;">Mods:</span>3x Grenade Kickstart</p>
@@ -2459,7 +2459,7 @@ html =
 				</span>
 				<div id="hunter_build_info_modal" class="modal">
 					<div class="modal-content">
-						<h2>Hunter Build Info</h2>
+						<h2 style="font-size:1.5em">Hunter Build Info</h2>
 						<p><span style="font-weight:900;">Exotic:</span>Ophidia Spathe or Caliban's Hand</p>
 						<p><span style="font-weight:900;">Melee:</span>Proximity Explosive Knife</p>
 						<p><span style="font-weight:900;">Mods:</span>3x Melee Kickstart</p>
@@ -2487,8 +2487,8 @@ html =
 			<div style="padding-top:5px;text-align:center;">
 				<span class="lighttext">Checkpoint bot: <a id="copyJoinCode" href="#">/join CPBot#6289</a> - Bot's down or full? Ask in our Discord!</span>
 			</div>
-			<div id="copy_modal" class="modal">
-				<div class="modal-content" style="font-size:2.5em;">
+			<div id="copy_modal" class="modal" style="padding-top:100px;">
+				<div class="modal-content" style="font-size:2.5em;padding:1em;">
 					<p>Join code copied to clipboard!</p>
 				</div>
 			</div>
@@ -3004,12 +3004,9 @@ function setupModal(modalId, openBtnId, closeBtnId) {
 		modal.style.display = "none";
 	  }
 	});
-  }
-  
-	
+  }	
 	setupModal("titan_build_info_modal", "titan_build_info_button", "titan_build_close_button");
 	setupModal("hunter_build_info_modal", "hunter_build_info_button", "hunter_build_close_button");
-
 	
 window.addEventListener("beforeunload", function (event) {
 	event.preventDefault();
@@ -3035,7 +3032,7 @@ window.addEventListener("beforeunload", function (event) {
 	if (isNaN(num)) {
 	  input.value = "";
 	} else {
-	  input.value = Math.min(9999, num);// Clamp the value to a maximum of 9999
+	  input.value = Math.min(9999, num); // Clamp the value to a maximum of 9999
 	}
   }
   
@@ -3074,16 +3071,11 @@ window.addEventListener("beforeunload", function (event) {
   });  
 )
 
-title = Antra's Tabbed Out XP Script v1.0.1
+title = Antra's Tabbed Out XP Script v1.1.0
 
 neutron := new NeutronWindow(html, css, js, title)
 neutron.Gui("+LabelNeutron +AlwaysOnTop")
 
-
-
-
-
-; Create a new Xbox 360 controller
 360Controller := new ViGEmXb360()
 overlay := new ShinsOverlayClass("ahk_exe destiny2.exe")
 gosub, readfromini
@@ -3144,10 +3136,8 @@ readfromini:
 	neutron.doc.getElementById("timeInput").value := timeInput
 	neutron.doc.getElementById("titan_enable").checked := titan_enable
 
-
-
 	if (menuInput == closeInput || menuInput == reloadInput || menuInput == startInput || closeInput == reloadInput || closeInput == startInput || reloadInput == startInput) {
-		neutron.doc.getElementById("alert1").innertext := "You have overlapping binds!"
+		neutron.doc.getElementById("alert1").innertext := "You have overlapping binds!" ; this will basically only trigger if the user manually edits the xpStuff.ini file and inputs overlapping binds
 		show = 1
 		neutron.Show("h433")
 		if (!A_IsSuspended) {
@@ -3158,7 +3148,6 @@ readfromini:
 		hotkey, %reloadInput%, pause_bind
 		hotkey, %startInput%, start_bind
 		hotkey, %menuInput%, menu_bind
-
 		neutron.doc.getElementById("alert1").innertext := ""
 		show = 0
 		neutron.Hide()
@@ -3187,11 +3176,7 @@ writetoini:
 	} else {
 	    reload
 	}
-
-
 return
-
-
 
 UpdateOverlay:
 	WinGetPos, x, y, w, h, ahk_exe destiny2.exe
@@ -3224,7 +3209,6 @@ menu_bind:
         }
     }
 Return
-
 
 start_bind:
 	status = 1
