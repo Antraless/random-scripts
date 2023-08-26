@@ -2395,11 +2395,11 @@ html =
 (
 	<body>
     <form id="xpform" onsubmit="ahk.Submitted(event)">
-        <fieldset>
+        <fieldset style="margin-top:-3px;">
             <legend align="center">
                 <h2>XP Script Settings</h2>
             </legend>
-            <div class="row" style="padding:0;">
+            <div class="row">
                 <span>
                     <input class="balloon" id="menuInput" type="text" readonly>
                     <label for="menuInput">Menu</label>
@@ -2426,10 +2426,54 @@ html =
                     <button class="button defaultbutton" id="resetButton" type="button">Reset to default</button>
                 </span>
 				<div style="padding: 5px 0 0 0;text-align:center;">
-					<span class="lighttext" style="margin:0 0 0 13px;">A delay between 2400~2900ms is advised. The additional 500ms delay is for anti-afk.</span>
+					<span class="lighttext">A delay between 2400~2900ms is advised. The additional 500ms delay is for anti-afk.</span>
 				</div>
             </div>
         </fieldset>
+		<fieldset>
+			<legend align="center">
+				<h2>Builds</h2>
+			</legend>
+			<div class="row">
+				<span>
+					<button class="altbutton" id="titan_build_info_button" type="button">Titan Build Info</button>
+				</span>
+				<div id="titan_build_info_modal" class="modal">
+					<div class="modal-content">
+						<h2>Titan Build Info</h2>
+						<p><span style="font-weight:900;">Exotic:</span>Ashens Wake</p>
+						<p><span style="font-weight:900;">Grenade:</span>Fusion Grenade</p>
+						<p><span style="font-weight:900;">Mods:</span>3x Grenade Kickstart</p>
+						<p><span style="font-weight:900;">Aspect/Fragment:</span>DO NOT use the Sol Invictus aspect</p>
+						<span class="lighttext">100 Discpline is nice but not required!</span><br>
+						<button class="smallbutton" id="titan_build_close_button" type="button">Close</button>
+					</div>
+				</div>
+				<label>
+					<div id="toggler">
+						<input type="checkbox" id="titan_enable"><span>Current Mode: </span>
+					</div>
+				</label>
+				<span>
+					<button class="altbutton" id="hunter_build_info_button" type="button">Hunter Build Info</button>
+				</span>
+				<div id="hunter_build_info_modal" class="modal">
+					<div class="modal-content">
+						<h2>Hunter Build Info</h2>
+						<p><span style="font-weight:900;">Exotic:</span>Ophidia Spathe or Caliban's Hand</p>
+						<p><span style="font-weight:900;">Melee:</span>Proximity Explosive Knife</p>
+						<p><span style="font-weight:900;">Mods:</span>3x Melee Kickstart</p>
+						<p><span style="font-weight:900;">Aspect/Fragment:</span>Knock 'Em Down and Ember of Torches</p>
+						<span class="lighttext">100 Strength is nice but not required!</span><br>
+						<button class="smallbutton" id="hunter_build_close_button" type="button">Close</button>
+					</div>
+				</div>
+			</div>
+			<div style="padding: 5px 0 0 0;text-align:center;">
+				<span class="lighttext">Titan's slightly better. Hunter's fine if it's all you have. Click "Current Mode" to switch modes.</span>
+			</div>
+		</fieldset>
+
 			<div class="row">
 				<p class="alerttext" id="alert1"></p>
 				<span>
@@ -2443,8 +2487,8 @@ html =
 			<div style="padding-top:5px;text-align:center;">
 				<span class="lighttext">Checkpoint bot: <a id="copyJoinCode" href="#">/join CPBot#6289</a> - Bot's down or full? Ask in our Discord!</span>
 			</div>
-			<div id="myModal" class="modal">
-				<div class="modal-content">
+			<div id="copy_modal" class="modal">
+				<div class="modal-content" style="font-size:2.5em;">
 					<p>Join code copied to clipboard!</p>
 				</div>
 			</div>
@@ -2466,10 +2510,91 @@ html =
 css =
 (
 
+	.togglebuttonHunter:hover {
+		background-color: #F28338 !important;
+		color: white;
+		
+	  }	
+
+	  .togglebuttonHunter {
+		border: 2px solid #F28338;
+		font-weight:900;
+	  }
+
+	  
+	  .togglebuttonTitan:hover {
+		background-color: #AD88C0 !important;
+		color: white;
+	  }
+
+	  .togglebuttonTitan {
+		border: 2px solid #AD88C0;
+		font-weight:900;
+	  }
+
+
+	#toggler {
+		outline: 0;
+		width:215px;
+		transition-duration: 0.4s;
+		cursor: pointer;
+		text-align: center;
+		text-decoration: none;
+		display: inline-block;
+		padding:10px;
+		font-size:1em;
+		margin: 0 10px;
+		background-color: #222831;
+		color: #EEEEEE;
+		border-radius: 3px;
+	}
+
+
+
+	label #toggler input {
+		position:absolute;
+		top:-4000px;
+	}
+
+
+	.smallbutton {
+		outline: 0;
+		transition-duration: 0.4s;
+		cursor: pointer;
+		text-align: center;
+		text-decoration: none;
+		display: inline-block;
+		padding:10px;
+		font-size:1em;
+		background-color: #222831;
+		color: #EEEEEE;
+		border: 2px solid #00b5ae;
+		border-radius: 3px;
+		margin: 5px 0;
+	}
+	.smallbutton:hover {
+	  background-color: #00b5ae;
+	  color: white;
+	}
+
+
+	#toggler input + span:after {
+		content: 'Hunter'
+	}
+
+	#toggler input:checked + span:after {
+		content: 'Titan'
+	}
+	.modal-content h2 {
+		margin: 5px 0;
+	}
+
+
+
 	.modal {
 		display: none;
 		position: fixed;
-		z-index: 1;
+		z-index: 9999;
 		padding-top: 80px; 
 		left: 0;
 		top: 0;
@@ -2485,10 +2610,16 @@ css =
 		background-color: #393E46;
 		color:white;
 		margin: auto;
-		font-size:2.5em;
+		z-index: 9999;
 		border: 2px solid rgba(0, 173, 181, 0.5);
 		width: 80`%;
 	}
+	.modal-content p {
+		padding:0;
+		margin:0;
+	}
+
+
 
 	.signature {
 		width: 100`%;
@@ -2536,10 +2667,12 @@ css =
 	h2 {
 		text-align:center;
 		font-size:1.3em;
+		font-weight:800;
 		margin: 0;
 		padding: 0;
    }
 	fieldset {
+		padding-top:5px;
 		border: 2px solid rgba(0, 173, 181, 0.5);
    }
 	legend {
@@ -2706,7 +2839,7 @@ css =
 		background-color: #00ADB5;
 		width: 215px;
 		position: relative;
-		padding: 11px 0;
+		padding: 8px 0;
 		top: -3px;
 		text-align: center;
 		text-decoration: none;
@@ -2716,6 +2849,7 @@ css =
 		outline: 0;
 		transition-duration: 0.4s;
 		cursor: pointer;
+		z-index:1;
    }
 	.defaultbutton {
 		background-color: #222831;
@@ -2759,10 +2893,68 @@ css =
 		display: inline-block;
 		margin: 0 10px;
    }   
+   
+	.altbutton {
+		outline: 0;
+		width:175px;
+		transition-duration: 0.4s;
+		cursor: pointer;
+		text-align: center;
+		text-decoration: none;
+		display: inline-block;
+		padding:10px;
+		font-size:1em;
+		margin: 0 5px;
+		background-color: #222831;
+		color: #EEEEEE;
+		border: 2px solid rgba(0, 173, 181, 0.5);
+		border-radius: 3px;
+	  }
+	  
+	  .altbutton:hover {
+		background-color: #00ADB5;
+		color: white;
+	  }
+
 )
 
 js =
 (
+
+function sleep(milliseconds, callback) {
+	setTimeout(callback, milliseconds);
+  }
+
+var checkbox = document.getElementById('titan_enable');
+var parentElement = checkbox.parentElement;
+
+// i truly hate this
+document.addEventListener('DOMContentLoaded', function() {
+	sleep(500, function() {
+		if (checkbox.checked) {
+		
+		parentElement.classList.add('togglebuttonTitan');
+		parentElement.classList.remove('togglebuttonHunter');
+	  } else {
+		parentElement.classList.add('togglebuttonHunter');
+		parentElement.classList.remove('togglebuttonTitan');
+	  }
+		});
+});
+
+
+	checkbox.addEventListener('change', function() {
+	  if (checkbox.checked) {
+		parentElement.classList.add('togglebuttonTitan');
+		parentElement.classList.remove('togglebuttonHunter');
+	  } else {
+		parentElement.classList.add('togglebuttonHunter');
+		parentElement.classList.remove('togglebuttonTitan');
+	  }
+	});
+
+
+
 
 document.getElementById("copyJoinCode").addEventListener("click", function(event) {
     event.preventDefault();
@@ -2779,7 +2971,7 @@ document.getElementById("copyJoinCode").addEventListener("click", function(event
     
     document.body.removeChild(tempInput);
     
-    const modal = document.getElementById("myModal");
+    const modal = document.getElementById("copy_modal");
     modal.style.display = "block";
     
     setTimeout(function() {
@@ -2787,6 +2979,38 @@ document.getElementById("copyJoinCode").addEventListener("click", function(event
     }, 2000);
 });
 
+function setupModal(modalId, openBtnId, closeBtnId) {
+	var modal = document.getElementById(modalId);
+	var openModalBtn = document.getElementById(openBtnId);
+	var closeModalBtn = document.getElementById(closeBtnId);
+  
+	openModalBtn.addEventListener("click", function() {
+	  modal.style.display = "block";
+	});
+  
+	closeModalBtn.addEventListener("click", function() {
+	  modal.style.display = "none";
+	});
+  
+	window.addEventListener("click", function(event) {
+	  if (event.target === modal) {
+		modal.style.display = "none";
+	  }
+	});
+  
+	// Add event listener for the Escape key
+	document.addEventListener("keydown", function(event) {
+	  if (event.key === "Esc") {
+		modal.style.display = "none";
+	  }
+	});
+  }
+  
+	
+	setupModal("titan_build_info_modal", "titan_build_info_button", "titan_build_close_button");
+	setupModal("hunter_build_info_modal", "hunter_build_info_button", "hunter_build_close_button");
+
+	
 window.addEventListener("beforeunload", function (event) {
 	event.preventDefault();
 	event.returnValue = "This will clear all values, are you sure you want to refresh?";
@@ -2846,7 +3070,7 @@ window.addEventListener("beforeunload", function (event) {
 	document.getElementById("closeInput").value = "F8";
 	document.getElementById("reloadInput").value = "F5";
 	document.getElementById("startInput").value = "F4";
-	document.getElementById("timeInput").value = "2600";
+	document.getElementById("timeInput").value = "2800";
   });  
 )
 
@@ -2898,6 +3122,7 @@ Submitted(neutron, event)
     global reloadInput := formData.reloadInput
     global startInput := formData.startInput
     global timeInput := formData.timeInput
+	global titan_enable := formData.titan_enable
     gosub, writetoini
 }
 Return
@@ -2907,7 +3132,8 @@ readfromini:
 	iniread, closeInput, xpStuff.ini, xpScriptBinds, closeInput, F8
 	iniread, reloadInput, xpStuff.ini, xpScriptBinds, reloadInput, F5
 	iniread, startInput, xpStuff.ini, xpScriptBinds, startInput, F4
-	iniread, timeInput, xpStuff.ini, xpScriptDelays, timeInput, 2600
+	iniread, timeInput, xpStuff.ini, xpScriptDelays, timeInput, 2800
+	iniread, titan_enable, xpStuff.ini, xpScriptMode, titan_enable, "on"
 
 	iniread, initialOpen, xpStuff.ini, xpScriptMisc, initialOpen, 0
 
@@ -2916,13 +3142,14 @@ readfromini:
 	neutron.doc.getElementById("reloadInput").value := reloadInput
 	neutron.doc.getElementById("startInput").value := startInput
 	neutron.doc.getElementById("timeInput").value := timeInput
+	neutron.doc.getElementById("titan_enable").checked := titan_enable
 
 
 
 	if (menuInput == closeInput || menuInput == reloadInput || menuInput == startInput || closeInput == reloadInput || closeInput == startInput || reloadInput == startInput) {
 		neutron.doc.getElementById("alert1").innertext := "You have overlapping binds!"
 		show = 1
-		neutron.Show("h330")
+		neutron.Show("h433")
 		if (!A_IsSuspended) {
 			Suspend, Toggle
 		}
@@ -2951,6 +3178,7 @@ writetoini:
     iniwrite, %reloadInput%, xpStuff.ini, xpScriptBinds, reloadInput
     iniwrite, %startInput%, xpStuff.ini, xpScriptBinds, startInput
     iniwrite, %timeInput%, xpStuff.ini, xpScriptDelays, timeInput
+	iniwrite, %titan_enable%, xpStuff.ini, xpScriptMode, titan_enable
 
 	if (initialOpen = 0) {
 		initialOpen = 1
@@ -2984,7 +3212,7 @@ menu_bind:
     Suspend, Permit
     if (!show) {
         show = 1
-        neutron.Show("h330")
+        neutron.Show("h433")
         if (!A_IsSuspended) {
             Suspend, Toggle
         }
@@ -3000,14 +3228,27 @@ Return
 
 start_bind:
 	status = 1
-	Loop {
-		360Controller.Axes.LY.SetState(0)
-		Loop 150 {   
-			360Controller.Buttons.LB.SetState(true)
-			Sleep 500
-			360Controller.Axes.LY.SetState(50)
-			360Controller.Buttons.LB.SetState(false) 
-			Sleep % timeInput
+	if(titan_enable) {
+		Loop {
+			360Controller.Axes.LY.SetState(0)
+			Loop 150 {
+				360Controller.Buttons.LB.SetState(true)
+				Sleep 500
+				360Controller.Axes.LY.SetState(50)
+				360Controller.Buttons.LB.SetState(false) 
+				Sleep % timeInput
+			}
+		}
+	} else { ; yes this could just be inside of the loop, no i do not care
+		Loop {
+			360Controller.Axes.LY.SetState(0)
+			Loop 150 {
+				360Controller.Buttons.RB.SetState(true)
+				Sleep 500
+				360Controller.Axes.LY.SetState(50)
+				360Controller.Buttons.RB.SetState(false) 
+				Sleep % timeInput
+			}
 		}
 	}
 Return
