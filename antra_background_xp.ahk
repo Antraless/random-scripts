@@ -2651,7 +2651,17 @@ table {
     margin: 0;
 }
 
-/* Signatures and Buttons */
+/* Copy Modal */
+#copy_modal {
+    padding-top: 100px;
+}
+
+#copy_modal modal-content {
+    font-size: 2.5em;
+    padding: 1em;
+}
+
+/* Signature */
 .signature {
     width: 100`%;
     padding-top: 5px;
@@ -2685,6 +2695,7 @@ table {
     fill: #BE1931;
 }
 
+/* Buttons */
 .button {
     background-color: #00ADB5;
     width: 215px;
@@ -2748,6 +2759,26 @@ table {
     color: white;
 }
 
+.smallbutton {
+	outline: 0;
+	transition-duration: 0.4s;
+	cursor: pointer;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	padding:10px;
+	font-size:1em;
+	background-color: #222831;
+	color: #EEEEEE;
+	border: 2px solid #00b5ae;
+	border-radius: 3px;
+	margin: 5px 0;
+}
+.smallbutton:hover {
+  background-color: #00b5ae;
+  color: white;
+}
+
 /* Other Styles */
 .row {
     margin: 0;
@@ -2797,16 +2828,6 @@ table {
 .subtext {
     padding-top: 5px;
     text-align: center;
-}
-
-/* Copy Modal */
-#copy_modal {
-    padding-top: 100px;
-}
-
-#copy_modal modal-content {
-    font-size: 2.5em;
-    padding: 1em;
 }
 
 /* Toggle Button Styles */
@@ -3218,7 +3239,7 @@ UpdateOverlay:
 	WinGetPos, x, y, w, h, ahk_exe destiny2.exe
 	font_size := h/32 ; auto scale overlay text by the height of the destiny 2 window
 	if (overlay.beginDraw()) { ; if we can draw the overlay... (is d2 active? did the class load correctly?)
-		inputs := "| " closeInput " - Close Script | " menuInput " - Options Menu | discord.gg/KGyjysA5WY"
+		inputs := "| " closeInput " - Close Script | " menuInput " - Options Menu |"
 		switch status {
 			case 0: ; script is not started
 				overlay.drawText("| " . startInput . " - Start Script " . inputs, 10, 0, font_size, 0xFFFFFFFF, "Courier", "olFF000000")
