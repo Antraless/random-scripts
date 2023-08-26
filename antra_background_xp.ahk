@@ -1216,16 +1216,7 @@ class ShinsOverlayClass {
 		DllCall(this.vTable(this.renderTarget,47),"Ptr",this.renderTarget,"Ptr",this.clrPtr)
 		DllCall(this.vTable(this.renderTarget,49),"Ptr",this.renderTarget,"int64*",tag1,"int64*",tag2)
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+		
 	;########################################## 
 	;  internal functions used by the class
 	;########################################## 
@@ -1404,6 +1395,8 @@ class ShinsOverlayClass {
 ; Copyright (c) 2020 Philip Taylor (known also as GeekDude, G33kDude)
 ; https://github.com/G33kDude/Neutron.ahk
 ;
+; slightly edited by Antra, you should not use this expecting it to be as default
+;
 ; MIT License
 ;
 ; Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -1415,10 +1408,6 @@ class ShinsOverlayClass {
 ;
 ; The above copyright notice and this permission notice shall be included in all
 ; copies or substantial portions of the Software.
-;
-; 
-;
-; slightly edited by Antra
 ;
 
 
@@ -2393,39 +2382,40 @@ class NeutronWindow
 
 html =
 (
-	<body>
+<body>
     <form id="xpform" onsubmit="ahk.Submitted(event)">
-        <fieldset style="margin-top:-3px;">
+        <fieldset>
             <legend align="center">
                 <h2>XP Script Settings</h2>
             </legend>
             <div class="row">
+				<span>
+					<input class="balloon" id="startInput" type="text" readonly>
+					<label for="startInput">Start</label>
+				</span>
+
                 <span>
-                    <input class="balloon" id="menuInput" type="text" readonly>
-                    <label for="menuInput">Menu</label>
+                    <input class="balloon" id="stopInput" type="text" readonly>
+                    <label for="stopInput">Reload</label>
                 </span>
-                <span>
-                    <input class="balloon" id="closeInput" type="text" readonly>
-                    <label for="closeInput">Close</label>
-                </span>
-                <span>
-                    <input class="balloon" id="reloadInput" type="text" readonly>
-                    <label for="reloadInput">Reload</label>
-                </span>
+				<span>
+					<input class="balloon" id="closeInput" type="text" readonly>
+					<label for="closeInput">Close</label>
+				</span>
             </div>
-            <div class="row" style="padding: 10px 0 0 0;">
-                <span>
-                    <input class="balloon" id="startInput" type="text" readonly>
-                    <label for="startInput">Start</label>
-                </span>
-				<div style="display:inline-block;position:relative;margin:0 10px;">
-					<input class="balloon" id="timeInput" type="text" value="1500" oninput="validateInput(this)">
-					<label for="timeInput">Delay</label><span style="position:absolute;width:70px;top:11px;margin-left:-107px;">+ 500ms</span>
+			<div class="row row2">
+				<span>
+					<input class="balloon" id="menuInput" type="text" readonly>
+					<label for="menuInput">Menu</label>
+				</span>
+				<div class="delaycontainer">
+					<input class="balloon" id="delayInput" type="text" oninput="validateInput(this)">
+					<label for="delayInput">Delay</label><span class="additionaldelay">+ 500ms</span>
 				</div>
                 <span>
                     <button class="button defaultbutton" id="resetButton" type="button">Reset to default</button>
                 </span>
-				<div style="padding: 5px 0 0 0;text-align:center;">
+				<div class="subtext">
 					<span class="lighttext">A delay between 2400~2900ms is advised. The additional 500ms delay is for anti-afk.</span>
 				</div>
             </div>
@@ -2440,11 +2430,11 @@ html =
 				</span>
 				<div id="titan_build_info_modal" class="modal">
 					<div class="modal-content">
-						<h2 style="font-size:1.5em">Titan Build Info</h2>
-						<p><span style="font-weight:900;">Exotic:</span>Ashens Wake</p>
-						<p><span style="font-weight:900;">Grenade:</span>Fusion Grenade</p>
-						<p><span style="font-weight:900;">Mods:</span>3x Grenade Kickstart</p>
-						<p><span style="font-weight:900;">Aspect/Fragment:</span>DO NOT use the Sol Invictus aspect</p>
+						<h2>Titan Build Info</h2>
+						<p><span>Exotic:</span>Ashens Wake</p>
+						<p><span>Grenade:</span>Fusion Grenade</p>
+						<p><span>Mods:</span>3x Grenade Kickstart</p>
+						<p><span>Aspect/Fragment:</span>DO NOT use the Sol Invictus aspect</p>
 						<span class="lighttext">100 Discpline is nice but not required!</span><br>
 						<button class="smallbutton" id="titan_build_close_button" type="button">Close</button>
 					</div>
@@ -2459,47 +2449,45 @@ html =
 				</span>
 				<div id="hunter_build_info_modal" class="modal">
 					<div class="modal-content">
-						<h2 style="font-size:1.5em">Hunter Build Info</h2>
-						<p><span style="font-weight:900;">Exotic:</span>Ophidia Spathe or Caliban's Hand</p>
-						<p><span style="font-weight:900;">Melee:</span>Proximity Explosive Knife</p>
-						<p><span style="font-weight:900;">Mods:</span>3x Melee Kickstart</p>
-						<p><span style="font-weight:900;">Aspect/Fragment:</span>Knock 'Em Down and Ember of Torches</p>
+						<h2>Hunter Build Info</h2>
+						<p><span>Exotic:</span>Ophidia Spathe or Caliban's Hand</p>
+						<p><span>Melee:</span>Proximity Explosive Knife</p>
+						<p><span>Mods:</span>3x Melee Kickstart</p>
+						<p><span>Aspect/Fragment:</span>Knock 'Em Down and Ember of Torches</p>
 						<span class="lighttext">100 Strength is nice but not required!</span><br>
 						<button class="smallbutton" id="hunter_build_close_button" type="button">Close</button>
 					</div>
 				</div>
 			</div>
-			<div style="padding: 5px 0 0 0;text-align:center;">
+			<div class="subtext">
 				<span class="lighttext">Titan's slightly better. Hunter's fine if it's all you have. Click "Current Mode" to switch modes.</span>
 			</div>
 		</fieldset>
-
-			<div class="row">
-				<p class="alerttext" id="alert1"></p>
-				<span>
-					<button class="button bigbutton" id="closeButton" type="button" onclick="ahk.closeButton(event)">Close Menu</button>
-				</span>
-				<span>
-					<button class="button bigbutton" id="saveButton" type="submit">Save/Reload</button>
-				</span>
+		<div class="row">
+			<p class="alerttext" id="alert1"></p>
+			<span>
+				<button class="button bigbutton" id="closeButton" type="button" onclick="ahk.closeButton(event)">Close Menu</button>
+			</span>
+			<span>
+				<button class="button bigbutton" id="saveButton" type="submit">Save/Reload</button>
+			</span>
+		</div>
+		<div class="subtext">
+			<span class="lighttext">Checkpoint bot: <a id="copyJoinCode" href="#">/join CPBot#6289</a> - Bot's down or full? Ask in our Discord!</span>
+		</div>
+		<div id="copy_modal" class="modal">
+			<div class="modal-content">
+				<p>Join code copied to clipboard!</p>
 			</div>
-
-			<div style="padding-top:5px;text-align:center;">
-				<span class="lighttext">Checkpoint bot: <a id="copyJoinCode" href="#">/join CPBot#6289</a> - Bot's down or full? Ask in our Discord!</span>
-			</div>
-			<div id="copy_modal" class="modal" style="padding-top:100px;">
-				<div class="modal-content" style="font-size:2.5em;padding:1em;">
-					<p>Join code copied to clipboard!</p>
-				</div>
-			</div>
-
-			<div class="signature" style="padding-top:5px;">
-				<p>			
+		</div>
+		<div class="signature">
+			<p>			
 				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
 					<path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
-			 	</svg>
-				from <a href="#" onclick="ahk.antraClicked(event)">Antra</a> - <a href="#" onclick="ahk.discordClicked(event)">Join our Discord</a> for support and more scripts!</p>
-			</div>
+				</svg>
+				from <a href="#" onclick="ahk.antraClicked(event)">Antra</a> - <a href="#" onclick="ahk.discordClicked(event)">Join our Discord</a> for support and more scripts!
+			</p>
+		</div>
     </form>
 </body>
 
@@ -2509,581 +2497,632 @@ html =
 
 css =
 (
+/* General Styles */
+* {
+    box-sizing: border-box;
+}
 
-	.togglebuttonHunter:hover {
-		background-color: #F28338 !important;
-		color: white;
-		
-	  }	
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    font-family: "Open Sans", sans-serif;
+    font-weight: 300;
+    color: #fff;
+    background: #393E46;
+}
 
-	  .togglebuttonHunter {
-		border: 2px solid #F28338;
-		font-weight:900;
-	  }
+header {
+    background: #222831;
+    color: white;
+}
 
-	  
-	  .togglebuttonTitan:hover {
-		background-color: #AD88C0 !important;
-		color: white;
-	  }
+h2 {
+    text-align: center;
+    font-size: 1.3em;
+    font-weight: 800;
+    margin: 0;
+    padding: 0;
+}
 
-	  .togglebuttonTitan {
-		border: 2px solid #AD88C0;
-		font-weight:900;
-	  }
+fieldset {
+    padding-top: 5px;
+    border: 2px solid rgba(0, 173, 181, 0.5);
+}
 
+legend {
+    color: #EEE;
+    text-align: center;
+}
 
-	#toggler {
-		outline: 0;
-		width:215px;
-		transition-duration: 0.4s;
-		cursor: pointer;
-		text-align: center;
-		text-decoration: none;
-		display: inline-block;
-		padding:10px;
-		font-size:1em;
-		margin: 0 10px;
-		background-color: #222831;
-		color: #EEEEEE;
-		border-radius: 3px;
-	}
+table {
+    margin: 5px auto;
+    table-layout: fixed;
+}
 
+.alerttext {
+    margin: 5px 0;
+    font-size: 0.9em;
+    padding: 0;
+    font-weight: 700;
+    color: #f00;
+    text-align: center;
+}
 
+.lighttext {
+    color: #AAA !important;
+}
 
-	label #toggler input {
-		position:absolute;
-		top:-4000px;
-	}
+/* Checkboxes */
+.checkbox {
+    display: block;
+    width: 150px;
+    position: relative;
+    cursor: pointer;
+    margin-bottom: 8px;
+}
 
+.checkbox input[type="checkbox"] {
+    position: absolute;
+    display: block;
+    top: 0;
+    left: 0;
+    height: 100`%;
+    width: 100`%;
+    cursor: pointer;
+    margin: 0;
+    opacity: 0;
+    z-index: 1;
+}
 
-	.smallbutton {
-		outline: 0;
-		transition-duration: 0.4s;
-		cursor: pointer;
-		text-align: center;
-		text-decoration: none;
-		display: inline-block;
-		padding:10px;
-		font-size:1em;
-		background-color: #222831;
-		color: #EEEEEE;
-		border: 2px solid #00b5ae;
-		border-radius: 3px;
-		margin: 5px 0;
-	}
-	.smallbutton:hover {
-	  background-color: #00b5ae;
-	  color: white;
-	}
+.checkbox label {
+    display: inline-block;
+    vertical-align: top;
+    text-align: left;
+    padding-left: 1.5em;
+    color: #EEE;
+    z-index: 10;
+}
 
+.checkbox label:before {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 18px;
+    height: 18px;
+    margin-right: 10px;
+    background: #ddd;
+    border-radius: 3px;
+}
 
-	#toggler input + span:after {
-		content: 'Hunter'
-	}
+.checkbox label:after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    background: #00ADB5;
+    opacity: 0;
+    pointer-events: none;
+}
 
-	#toggler input:checked + span:after {
-		content: 'Titan'
-	}
-	.modal-content h2 {
-		margin: 5px 0;
-	}
+.checkbox input:checked ~ label:after {
+    opacity: 1;
+}
 
+.checkbox input:focus ~ label:before {
+    background: #eee;
+}
 
+/* Modals */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    padding-top: 80px;
+    left: 0;
+    top: 0;
+    width: 100`%;
+    height: 100`%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
 
-	.modal {
-		display: none;
-		position: fixed;
-		z-index: 9999;
-		padding-top: 80px; 
-		left: 0;
-		top: 0;
-		width: 100`%;
-		height: 100`%; 
-		overflow: auto; 
-		background-color: rgba(0,0,0,0.4); 
-	}
+.modal-content {
+    text-align: center;
+    background-color: #393E46;
+    color: white;
+    margin: auto;
+    z-index: 9999;
+    border: 2px solid rgba(0, 173, 181, 0.5);
+    width: 80`%;
+}
 
-	/* Modal Content */
-	.modal-content {
-		text-align:center;
-		background-color: #393E46;
-		color:white;
-		margin: auto;
-		z-index: 9999;
-		border: 2px solid rgba(0, 173, 181, 0.5);
-		width: 80`%;
-	}
-	.modal-content p {
-		padding:0;
-		margin:0;
-	}
+.modal-content p {
+    padding: 0;
+    margin: 0;
+}
 
+/* Signatures and Buttons */
+.signature {
+    width: 100`%;
+    padding-top: 5px;
+}
 
+.signature a,
+#copyJoinCode {
+    color: #FFF;
+    transition: color 0.8s;
+    text-decoration: none;
+    font-weight: bold;
+}
 
-	.signature {
-		width: 100`%;
-   }
-	.signature a, #copyJoinCode {
-		color:#FFF;
-		transition: color .8s;
-		text-decoration:none;
-		font-weight:bold;
-   }
-	.signature a:hover #copyJoinCode:hover {
-		color: #2282e4;
-   }
-	.signature p {
-		padding:0;
-		margin:auto 0 0 0;
-		text-align: center;
-		font-size: 1em;
-		color: #AAA;
-   }
-	.signature svg {
-		padding-top:3px;
-		width:1.1em;
-		height:1.1em;
-		fill:#BE1931;
-   }
-	* {
-		box-sizing: border-box;
-   }
-	body {
-		min-height: 100vh;
-		display: flex;
-		flex-direction: column;
-		margin: 0;
-		padding: 0;
-		font-family: "Open Sans", sans-serif;
-		font-weight: 300;
-		color: #fff;
-		background: #393E46;
-   }
-	header {
-		background: #222831;
-		color: white;
-   }
-	h2 {
-		text-align:center;
-		font-size:1.3em;
-		font-weight:800;
-		margin: 0;
-		padding: 0;
-   }
-	fieldset {
-		padding-top:5px;
-		border: 2px solid rgba(0, 173, 181, 0.5);
-   }
-	legend {
-		color: #EEE;
-		text-align:center;
-   }
-	table {
-		margin:5px auto;
-		table-layout: fixed;
-   }
-	.alerttext {
-		margin:5px 0;
-		font-size: 0.9em;
-		padding:0;
-		font-weight: 700;
-		color: #f00;
-		text-align: center;
-   }
-	.lighttext {
-		color: #AAA !important;
-   }
-	.checkbox {
-		display: block;
-		width:150px;
-		position: relative;
-		cursor: pointer;
-		margin-bottom: 8px;
-   }
-	.checkbox input[type="checkbox"] {
-		position: absolute;
-		display: block;
-		top: 0;
-		left: 0;
-		height: 100`%;
-		width: 100`%;
-		cursor: pointer;
-		margin: 0;
-		opacity: 0;
-		z-index: 1;
-   }
-	.checkbox label {
-		display: inline-block;
-		vertical-align: top;
-		text-align: left;
-		padding-left: 1.5em;
-		color: #EEE;
-		z-index: 10;
-   }
-	.checkbox label:before {
-		content: '';
-		display: block;
-		position: absolute;
-		left: 0;
-		top: 0;
-		width: 18px;
-		height: 18px;
-		margin-right: 10px;
-		background: #ddd;
-		border-radius: 3px;
-   }
-	.checkbox label:after {
-		content: '';
-		display: block;
-		position: absolute;
-		top: 4px;
-		left: 4px;
-		width: 10px;
-		height: 10px;
-		border-radius: 2px;
-		background: #00ADB5;
-		opacity: 0;
-		pointer-events: none;
-   }
-	.checkbox input:checked ~ label:after {
-		opacity: 1;
-   }
-	.checkbox input:focus ~ label:before {
-		background: #eee;
-   }
-	#brightnessInput {
-		text-indent: 90px;
-   }
-	#brightnessInput:focus, #brightnessInput:active, #brightnessInput:hover {
-		text-indent: 0;
-   }
-	.mini-balloon {
-		display: inline-block;
-		z-index: 999;
-		position: absolute;
-		text-align:center;
-		width: 28px;
-		color: #EEE;
-		background: #222831;
-		bottom: 1px;
-		border: 0;
-		border-radius: 3px;
-		outline: 0;
-   }
-	.balloon {
-		display: inline-block;
-		width: 215px;
-		padding: 11px 0 10px 15px;
-		font-family: "Open Sans", sans;
-		font-weight: 400;
-		font-size: 1em;
-		color: #EEE;
-		background: #222831;
-		border: 0;
-		text-indent: 60px;
-		border-radius: 3px;
-		outline: 0;
-		transition: all 0.3s ease-in-out;
-   }
-	.balloon + label {
-		display: inline-block;
-		position: absolute;
-		top: 8px;
-		width: 60px;
-		padding: 3px;
-		left: 0;
-		bottom: 8px;
-		margin: 0 0 0 9px;
-		color: #EEE;
-		font-size: 1em;
-		font-weight: 700;
-		text-shadow: 0 1px 0 rgba(19, 74, 70, 0);
-		transition: all 0.3s ease-in-out;
-		background: rgba(0, 173, 181, 0.5);
-   }
-	.balloon + label:after {
-		position: absolute;
-		content: "";
-		width: 0;
-		height: 0;
-		top: 100`%;
-		left: 50`%;
-		margin-left: -3px;
-		border-left: 3px solid transparent;
-		border-right: 3px solid transparent;
-		border-top: 3px solid rgba(0, 173, 181, 0);
-		transition: all 0.3s ease-in-out;
-   }
-	.balloon:focus, .balloon:active {
-		color: #EEE;
-		text-indent: 0;
-		background: #2D333B;
-   }
-	.balloon:hover {
-		text-indent: 0;
-   }
-	.balloon:focus::placeholder, .balloon:active::placeholder, .balloon:hover::placeholder {
-		color: #aaa;
-   }
-	.balloon:focus + label, .balloon:active + label, .balloon:hover + label {
-		color: #fff;
-		text-shadow: 0 1px 0 rgba(19, 74, 70, 0.5);
-		background: #00ADB5;
-		transform: translateY(-40px);
-   }
-	.balloon:focus + label:after, .balloon:active + label:after, .balloon:hover + label:after {
-		border-top: 4px solid #00ADB5;
-   }
-	.button {
-		background-color: #00ADB5;
-		width: 215px;
-		position: relative;
-		padding: 8px 0;
-		top: -3px;
-		text-align: center;
-		text-decoration: none;
-		display: inline-block;
-		font-size: 1em;
-		border-radius: 3px;
-		outline: 0;
-		transition-duration: 0.4s;
-		cursor: pointer;
-		z-index:1;
-   }
-	.defaultbutton {
-		background-color: #222831;
-		color: #EEE;
-		border: 2px solid rgba(0, 173, 181, 0.5);
-   }
-	.defaultbutton:hover {
-		background-color: #00ADB5;
-		color: white;
-   }
-	.bigbutton {
-		font-size:1.3em;
-		margin: 5px 0 0 0;
-		background-color: #222831;
-		color: #EEEEEE;
-		border: 2px solid rgba(0, 173, 181, 0.5);
-   }
-	.bigbutton:hover {
-		background-color: #00ADB5;
-		color: white;
-   }
-	.row {
-		margin: 0;
-		max-width: 800px;
-		position: relative;
-		z-index: 1;
-		text-align: center;
-   }
-	.row:before {
-		position: absolute;
-		content: "";
-		display: block;
-		top: 0;
-		left: -5000px;
-		height: 100`%;
-		z-index: -1;
-		background: inherit;
-   }
-	.row span {
-		position: relative;
-		display: inline-block;
-		margin: 0 10px;
-   }   
-   
-	.altbutton {
-		outline: 0;
-		width:175px;
-		transition-duration: 0.4s;
-		cursor: pointer;
-		text-align: center;
-		text-decoration: none;
-		display: inline-block;
-		padding:10px;
-		font-size:1em;
-		margin: 0 5px;
-		background-color: #222831;
-		color: #EEEEEE;
-		border: 2px solid rgba(0, 173, 181, 0.5);
-		border-radius: 3px;
-	  }
-	  
-	  .altbutton:hover {
-		background-color: #00ADB5;
-		color: white;
-	  }
+.signature a:hover,
+#copyJoinCode:hover {
+    color: #2282e4;
+}
+
+.signature p {
+    padding: 0;
+    margin: auto 0 0 0;
+    text-align: center;
+    font-size: 1em;
+    color: #AAA;
+}
+
+.signature svg {
+    padding-top: 3px;
+    width: 1.1em;
+    height: 1.1em;
+    fill: #BE1931;
+}
+
+.button {
+    background-color: #00ADB5;
+    width: 215px;
+    position: relative;
+    padding: 8px 0;
+    top: -3px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1em;
+    border-radius: 3px;
+    outline: 0;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.defaultbutton {
+    background-color: #222831;
+    color: #EEE;
+    border: 2px solid rgba(0, 173, 181, 0.5);
+}
+
+.defaultbutton:hover {
+    background-color: #00ADB5;
+    color: white;
+}
+
+.bigbutton {
+    font-size: 1.3em;
+    margin: 5px 0 0 0;
+    background-color: #222831;
+    color: #EEEEEE;
+    border: 2px solid rgba(0, 173, 181, 0.5);
+}
+
+.bigbutton:hover {
+    background-color: #00ADB5;
+    color: white;
+}
+
+.altbutton {
+    outline: 0;
+    width: 175px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    padding: 10px;
+    font-size: 1em;
+    margin: 0 5px;
+    background-color: #222831;
+    color: #EEEEEE;
+    border: 2px solid rgba(0, 173, 181, 0.5);
+    border-radius: 3px;
+}
+
+.altbutton:hover {
+    background-color: #00ADB5;
+    color: white;
+}
+
+/* Other Styles */
+.row {
+    margin: 0;
+    max-width: 800px;
+    position: relative;
+    z-index: 1;
+    text-align: center;
+}
+
+.row2 {
+    padding-top: 10px;
+}
+
+.row:before {
+    position: absolute;
+    content: "";
+    display: block;
+    top: 0;
+    left: -5000px;
+    height: 100`%;
+    z-index: -1;
+    background: inherit;
+}
+
+.row span {
+    position: relative;
+    display: inline-block;
+    margin: 0 10px;
+}
+
+/* Delay Container */
+.delaycontainer {
+    display: inline-block;
+    position: relative;
+    margin: 0 10px;
+}
+
+/* Additional Delay */
+.additionaldelay {
+    position: absolute !important;
+    width: 70px !important;
+    top: 11px !important;
+    margin-left: -107px !important;
+}
+
+/* Subtext */
+.subtext {
+    padding-top: 5px;
+    text-align: center;
+}
+
+/* Copy Modal */
+#copy_modal {
+    padding-top: 100px;
+}
+
+#copy_modal modal-content {
+    font-size: 2.5em;
+    padding: 1em;
+}
+
+/* Toggle Button Styles */
+.togglebuttonHunter:hover {
+    background-color: #F28338 !important;
+    color: white;
+}
+
+.togglebuttonHunter {
+    border: 2px solid #F28338;
+    font-weight: 900;
+}
+
+.togglebuttonTitan:hover {
+    background-color: #AD88C0 !important;
+    color: white;
+}
+
+.togglebuttonTitan {
+    border: 2px solid #AD88C0;
+    font-weight: 900;
+}
+
+/* Toggler Styles */
+#toggler {
+    outline: 0;
+    width: 215px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    padding: 10px;
+    font-size: 1em;
+    margin: 0 10px;
+    background-color: #222831;
+    color: #EEEEEE;
+    border-radius: 3px;
+}
+
+label #toggler input {
+    position: absolute;
+    top: -4000px;
+}
+
+#toggler input + span:after {
+    content: 'Hunter';
+}
+
+#toggler input:checked + span:after {
+    content: 'Titan';
+}
+
+/* Balloon Styles */
+.mini-balloon {
+    display: inline-block;
+    z-index: 999;
+    position: absolute;
+    text-align: center;
+    width: 28px;
+    color: #EEE;
+    background: #222831;
+    bottom: 1px;
+    border: 0;
+    border-radius: 3px;
+    outline: 0;
+}
+
+.balloon {
+    display: inline-block;
+    width: 215px;
+    padding: 11px 0 10px 15px;
+    font-family: "Open Sans", sans;
+    font-weight: 400;
+    font-size: 1em;
+    color: #EEE;
+    background: #222831;
+    border: 0;
+    text-indent: 60px;
+    border-radius: 3px;
+    outline: 0;
+    transition: all 0.3s ease-in-out;
+}
+
+.balloon + label {
+    display: inline-block;
+    position: absolute;
+    top: 8px;
+    width: 60px;
+    padding: 3px;
+    left: 0;
+    bottom: 8px;
+    margin: 0 0 0 9px;
+    color: #EEE;
+    font-size: 1em;
+    font-weight: 700;
+    text-shadow: 0 1px 0 rgba(19, 74, 70, 0);
+    transition: all 0.3s ease-in-out;
+    background: rgba(0, 173, 181, 0.5);
+}
+
+.balloon:focus,
+.balloon:active {
+    color: #EEE;
+    text-indent: 0;
+    background: #2D333B;
+}
+
+.balloon:hover {
+    text-indent: 0;
+}
+
+.balloon:focus::placeholder,
+.balloon:active::placeholder,
+.balloon:hover::placeholder {
+    color: #aaa;
+}
+
+.balloon:focus + label,
+.balloon:active + label,
+.balloon:hover + label {
+    color: #fff;
+    text-shadow: 0 1px 0 rgba(19, 74, 70, 0.5);
+    background: #00ADB5;
+    transform: translateY(-40px);
+}
+
+.balloon:focus + label:after,
+.balloon:active + label:after,
+.balloon:hover + label:after {
+    border-top: 4px solid #00ADB5;
+}
 
 )
 
 js =
 (
-
-function sleep(milliseconds, callback) {
-	setTimeout(callback, milliseconds);
-  }
-
-var checkbox = document.getElementById('titan_enable');
-var parentElement = checkbox.parentElement;
-
-// i truly hate this
-document.addEventListener('DOMContentLoaded', function() {
-	sleep(500, function() {
-		if (checkbox.checked) {
-		
-		parentElement.classList.add('togglebuttonTitan');
-		parentElement.classList.remove('togglebuttonHunter');
-	  } else {
-		parentElement.classList.add('togglebuttonHunter');
-		parentElement.classList.remove('togglebuttonTitan');
-	  }
+	// Function to simulate sleep (only used for delaying the DOM loaded checkbox logic, as otherwise it does not run correctly - IE8 moment)
+	function sleep(milliseconds, callback) {
+		setTimeout(callback, milliseconds);
+	}
+	
+	// Checkbox logic (for toggling between titan and hunter mode)
+	var checkbox = document.getElementById('titan_enable');
+	var parentElement = checkbox.parentElement;
+	
+	document.addEventListener('DOMContentLoaded', function() {
+		sleep(500, function() {
+			if (checkbox.checked) {
+				parentElement.classList.add('togglebuttonTitan');
+				parentElement.classList.remove('togglebuttonHunter');
+			} else {
+				parentElement.classList.add('togglebuttonHunter');
+				parentElement.classList.remove('togglebuttonTitan');
+			}
 		});
-});
-
-
+	});
+	
 	checkbox.addEventListener('change', function() {
-	  if (checkbox.checked) {
-		parentElement.classList.add('togglebuttonTitan');
-		parentElement.classList.remove('togglebuttonHunter');
-	  } else {
-		parentElement.classList.add('togglebuttonHunter');
-		parentElement.classList.remove('togglebuttonTitan');
-	  }
+		if (checkbox.checked) {
+			parentElement.classList.add('togglebuttonTitan');
+			parentElement.classList.remove('togglebuttonHunter');
+		} else {
+			parentElement.classList.add('togglebuttonHunter');
+			parentElement.classList.remove('togglebuttonTitan');
+		}
 	});
-
-
-
-
-document.getElementById("copyJoinCode").addEventListener("click", function(event) {
-    event.preventDefault();
-    const textToCopy = event.target.textContent;
-    
-    const tempInput = document.createElement("input");
-    tempInput.style.position = "absolute";
-    tempInput.style.left = "-1000px";
-    tempInput.value = textToCopy;
-    document.body.appendChild(tempInput);
-    
-    tempInput.select();
-    document.execCommand("copy");
-    
-    document.body.removeChild(tempInput);
-    
-    const modal = document.getElementById("copy_modal");
-    modal.style.display = "block";
-    
-    setTimeout(function() {
-        modal.style.display = "none";
-    }, 2000);
-});
-
-function setupModal(modalId, openBtnId, closeBtnId) {
-	var modal = document.getElementById(modalId);
-	var openModalBtn = document.getElementById(openBtnId);
-	var closeModalBtn = document.getElementById(closeBtnId);
-  
-	openModalBtn.addEventListener("click", function() {
-	  modal.style.display = "block";
+	
+	// Copy Join Code Logic
+	document.getElementById("copyJoinCode").addEventListener("click", function(event) {
+		event.preventDefault();
+		const textToCopy = event.target.textContent;
+		
+		const tempInput = document.createElement("input");
+		tempInput.style.position = "absolute";
+		tempInput.style.left = "-1000px";
+		tempInput.value = textToCopy;
+		document.body.appendChild(tempInput);
+		
+		tempInput.select();
+		document.execCommand("copy");
+		
+		document.body.removeChild(tempInput);
+		
+		const modal = document.getElementById("copy_modal");
+		modal.style.display = "block";
+		
+		setTimeout(function() {
+			modal.style.display = "none";
+		}, 2000);
 	});
-  
-	closeModalBtn.addEventListener("click", function() {
-	  modal.style.display = "none";
-	});
-  
-	window.addEventListener("click", function(event) {
-	  if (event.target === modal) {
-		modal.style.display = "none";
-	  }
-	});
-  
-	// Add event listener for the Escape key
-	document.addEventListener("keydown", function(event) {
-	  if (event.key === "Esc") {
-		modal.style.display = "none";
-	  }
-	});
-  }	
+	
+	// Modal Setup Function (for the information modals)
+	function setupModal(modalId, openBtnId, closeBtnId) {
+		var modal = document.getElementById(modalId);
+		var openModalBtn = document.getElementById(openBtnId);
+		var closeModalBtn = document.getElementById(closeBtnId);
+	  
+		openModalBtn.addEventListener("click", function() {
+			modal.style.display = "block";
+		});
+	  
+		closeModalBtn.addEventListener("click", function() {
+			modal.style.display = "none";
+		});
+	  
+		window.addEventListener("click", function(event) {
+			if (event.target === modal) {
+				modal.style.display = "none";
+			}
+		});
+	  
+		// Add event listener for the Escape key
+		document.addEventListener("keydown", function(event) {
+			if (event.key === "Esc") {
+				modal.style.display = "none";
+			}
+		});
+	}
+	
+	// Setup Modals
 	setupModal("titan_build_info_modal", "titan_build_info_button", "titan_build_close_button");
 	setupModal("hunter_build_info_modal", "hunter_build_info_button", "hunter_build_close_button");
 	
-window.addEventListener("beforeunload", function (event) {
-	event.preventDefault();
-	event.returnValue = "This will clear all values, are you sure you want to refresh?";
-  });
-  
-  function ensureUniqueValue(inputId, value) {
-	var inputs = document.querySelectorAll('input[type="text"]');
-	for (var i = 0; i < inputs.length; i++) {
-	  if (inputs[i].id !== inputId && inputs[i].value === value) {
-		document.getElementById('alert1').textContent = "Whatever you are pressing is already another bind.";
-		return false;
-	  }
-	}
-	document.getElementById('alert1').textContent = "";
-	return true;
-  }
-  
-  function validateInput(input) {
-	input.value = input.value.replace(/[^0-9]/g, '');
-  
-	const num = parseInt(input.value, 10);
-	if (isNaN(num)) {
-	  input.value = "";
-	} else {
-	  input.value = Math.min(9999, num); // Clamp the value to a maximum of 9999
-	}
-  }
-  
-  function setupInput(inputId) {
-	var keyInput = document.getElementById(inputId);
-  
-	keyInput.addEventListener('focus', function () {
-	  document.addEventListener('keydown', onKeyDown);
+	// Before Unload Event (if the user tries to refresh the page)
+	window.addEventListener("beforeunload", function(event) {
+		event.preventDefault();
+		event.returnValue = "This will clear all values, are you sure you want to refresh?";
 	});
-  
-	keyInput.addEventListener('blur', function () {
-	  document.removeEventListener('keydown', onKeyDown);
+	
+	// Ensure Unique Values
+	function ensureUniqueValue(inputId, value) {
+		var inputs = document.querySelectorAll('input[type="text"]');
+		for (var i = 0; i < inputs.length; i++) {
+			if (inputs[i].id !== inputId && inputs[i].value === value) {
+				document.getElementById('alert1').textContent = "Whatever you are pressing is already another bind.";
+				return false;
+			}
+		}
+		document.getElementById('alert1').textContent = "";
+		return true;
+	}
+	
+	// Input Validation For Delay
+	function validateInput(input) {
+		input.value = input.value.replace(/[^0-9]/g, '');
+	
+		const num = parseInt(input.value, 10);
+		if (isNaN(num)) {
+			input.value = "";
+		} else {
+			input.value = Math.min(9999, num); // Clamp the value to a maximum of 9999
+		}
+	}
+	
+	// Setup Input
+	function setupInput(inputId) {
+		var keyInput = document.getElementById(inputId);
+	
+		keyInput.addEventListener('focus', function () {
+			document.addEventListener('keydown', onKeyDown);
+		});
+	
+		keyInput.addEventListener('blur', function () {
+			document.removeEventListener('keydown', onKeyDown);
+		});
+	
+		function onKeyDown(event) {
+			var keyPressed = event.key;
+			if (ensureUniqueValue(inputId, keyPressed)) {
+				keyInput.value = keyPressed;
+			}
+			event.preventDefault();
+		}
+	}
+	
+	setupInput('startInput');
+	setupInput('stopInput');
+	setupInput('closeInput');
+	setupInput('menuInput');
+	
+	// Reset Button Logic
+	document.getElementById("resetButton").addEventListener("click", function() {
+		document.getElementById("startInput").value = "F4";
+		document.getElementById("stopInput").value = "F5";
+		document.getElementById("closeInput").value = "F8";
+		document.getElementById("menuInput").value = "F9";
+		document.getElementById("delayInput").value = "2800";
 	});
-  
-	function onKeyDown(event) {
-	  var keyPressed = event.key;
-	if (ensureUniqueValue(inputId, keyPressed)) {
-		keyInput.value = keyPressed;
-	}
-	  event.preventDefault();
-	}
-  }
-  
-  setupInput('menuInput');
-  setupInput('closeInput');
-  setupInput('reloadInput');
-  setupInput('startInput');  
-
-  
-  document.getElementById("resetButton").addEventListener("click", function() {
-	document.getElementById("menuInput").value = "F9";
-	document.getElementById("closeInput").value = "F8";
-	document.getElementById("reloadInput").value = "F5";
-	document.getElementById("startInput").value = "F4";
-	document.getElementById("timeInput").value = "2800";
-  });  
+	
 )
 
-title = Antra's Tabbed Out XP Script v1.1.0
-
+title = Antra's Tabbed Out XP Script v1.1.1
+;make da neutron
 neutron := new NeutronWindow(html, css, js, title)
+;add some settings, both self explanatory
 neutron.Gui("+LabelNeutron +AlwaysOnTop")
 
+;make a vigem virtual 360 controller
 360Controller := new ViGEmXb360()
+
+;make an overlay that is attached to d2 and only active while d2 is active
 overlay := new ShinsOverlayClass("ahk_exe destiny2.exe")
+
+;read settings for the script
 gosub, readfromini
+
+;set status as 0 e.g. not started for the overlay
 status = 0
-SetTimer, UpdateOverlay, 500
+
+;update the overlay every 1000ms
+SetTimer, UpdateOverlay, 1000
+;now go to the overlay straight after setting the timer for initial load
 gosub, UpdateOverlay
 return
 
+; neutron events, from clicking links/buttons/blah blah...
 antraClicked(neutron, event)
 {
 	event.preventDefault()
@@ -3111,32 +3150,29 @@ Submitted(neutron, event)
     formData := neutron.GetFormData(event.target)
     global menuInput := formData.menuInput
     global closeInput := formData.closeInput
-    global reloadInput := formData.reloadInput
+    global stopInput := formData.stopInput
     global startInput := formData.startInput
-    global timeInput := formData.timeInput
+    global delayInput := formData.delayInput
 	global titan_enable := formData.titan_enable
     gosub, writetoini
 }
 Return
 
 readfromini:
-	iniread, menuInput, xpStuff.ini, xpScriptBinds, menuInput, F9
-	iniread, closeInput, xpStuff.ini, xpScriptBinds, closeInput, F8
-	iniread, reloadInput, xpStuff.ini, xpScriptBinds, reloadInput, F5
 	iniread, startInput, xpStuff.ini, xpScriptBinds, startInput, F4
-	iniread, timeInput, xpStuff.ini, xpScriptDelays, timeInput, 2800
+	iniread, stopInput, xpStuff.ini, xpScriptBinds, stopInput, F5
+	iniread, closeInput, xpStuff.ini, xpScriptBinds, closeInput, F8
+	iniread, menuInput, xpStuff.ini, xpScriptBinds, menuInput, F9
+	iniread, delayInput, xpStuff.ini, xpScriptDelays, delayInput, 2800
 	iniread, titan_enable, xpStuff.ini, xpScriptMode, titan_enable, "on"
-
-	iniread, initialOpen, xpStuff.ini, xpScriptMisc, initialOpen, 0
-
-	neutron.doc.getElementById("menuInput").value := menuInput
-	neutron.doc.getElementById("closeInput").value := closeInput
-	neutron.doc.getElementById("reloadInput").value := reloadInput
+	iniread, initialOpen, xpStuff.ini, xpScriptMisc, initialOpen, 1
 	neutron.doc.getElementById("startInput").value := startInput
-	neutron.doc.getElementById("timeInput").value := timeInput
+	neutron.doc.getElementById("stopInput").value := stopInput
+	neutron.doc.getElementById("closeInput").value := closeInput
+	neutron.doc.getElementById("menuInput").value := menuInput
+	neutron.doc.getElementById("delayInput").value := delayInput
 	neutron.doc.getElementById("titan_enable").checked := titan_enable
-
-	if (menuInput == closeInput || menuInput == reloadInput || menuInput == startInput || closeInput == reloadInput || closeInput == startInput || reloadInput == startInput) {
+	if (menuInput == closeInput || menuInput == stopInput || menuInput == startInput || closeInput == stopInput || closeInput == startInput || stopInput == startInput) {
 		neutron.doc.getElementById("alert1").innertext := "You have overlapping binds!" ; this will basically only trigger if the user manually edits the xpStuff.ini file and inputs overlapping binds
 		show = 1
 		neutron.Show("h433")
@@ -3144,33 +3180,32 @@ readfromini:
 			Suspend, Toggle
 		}
 	} else {
-		hotkey, %closeInput%, close_bind
-		hotkey, %reloadInput%, pause_bind
 		hotkey, %startInput%, start_bind
+		hotkey, %stopInput%, stop_bind
+		hotkey, %closeInput%, close_bind
 		hotkey, %menuInput%, menu_bind
-		neutron.doc.getElementById("alert1").innertext := ""
+		neutron.doc.getElementById("alert1").innertext := "" ; remove any alert that may exist, because everything is ok
 		show = 0
 		neutron.Hide()
 		if (A_IsSuspended) {
 			Suspend, Toggle
 		}
 	}
-	if (initialOpen = 0) {
+	if (initialOpen) {
 		gosub, writetoini
 	}
 return
 
 
 writetoini:
+	iniwrite, %startInput%, xpStuff.ini, xpScriptBinds, startInput
+	iniwrite, %stopInput%, xpStuff.ini, xpScriptBinds, stopInput
+	iniwrite, %closeInput%, xpStuff.ini, xpScriptBinds, closeInput
 	iniwrite, %menuInput%, xpStuff.ini, xpScriptBinds, menuInput
-    iniwrite, %closeInput%, xpStuff.ini, xpScriptBinds, closeInput
-    iniwrite, %reloadInput%, xpStuff.ini, xpScriptBinds, reloadInput
-    iniwrite, %startInput%, xpStuff.ini, xpScriptBinds, startInput
-    iniwrite, %timeInput%, xpStuff.ini, xpScriptDelays, timeInput
+	iniwrite, %delayInput%, xpStuff.ini, xpScriptDelays, delayInput
 	iniwrite, %titan_enable%, xpStuff.ini, xpScriptMode, titan_enable
-
-	if (initialOpen = 0) {
-		initialOpen = 1
+	if (initialOpen) {
+		initialOpen = 0
 		iniwrite, %initialOpen%, xpStuff.ini, xpScriptMisc, initialOpen
 		reload
 	} else {
@@ -3180,18 +3215,46 @@ return
 
 UpdateOverlay:
 	WinGetPos, x, y, w, h, ahk_exe destiny2.exe
-	font_size := h/32
-	if (overlay.beginDraw()) { 
-		inputs := "| " menuInput " - Menu | " closeInput " - Close | discord.gg/KGyjysA5WY"
+	font_size := h/32 ; auto scale overlay text by the height of the destiny 2 window
+	if (overlay.beginDraw()) { ; if we can draw the overlay... (is d2 active? did the class load correctly?)
+		inputs := "| " closeInput " - Close Script | " menuInput " - Options Menu | discord.gg/KGyjysA5WY"
 		switch status {
-			case 0:
-				overlay.drawText("| " . startInput . " - Start " . inputs, 10, 0, font_size, 0xFFFFFFFF, "Courier")
-			case 1:
-				overlay.drawText("| You may now tab out | " . reloadInput . " - Reload " . inputs, 10, 0, font_size, 0xFFFFFFFF, "Courier")
+			case 0: ; script is not started
+				overlay.drawText("| " . startInput . " - Start Script " . inputs, 10, 0, font_size, 0xFFFFFFFF, "Courier", "olFF000000")
+			case 1: ; script is started
+				overlay.drawText("| You may now tab out | " . stopInput . " - Stop Script " . inputs, 10, 0, font_size, 0xFFFFFFFF, "Courier" , "olFF000000")
 		}
-		overlay.EndDraw()
+		overlay.EndDraw() ; now the overlay has been drawn, end draw... (show it)
 	}
 return
+
+start_bind:
+	status = 1
+	Loop {
+		360Controller.Axes.LY.SetState(0) ; move backwards
+		Loop 100 { ; 100 is a reasonable amount of casts to do before going back to the main loop to move backwards again for anti-afk
+			if (titan_enable) {
+				360Controller.Buttons.LB.SetState(true) ; throw grenade
+			} else { ; if not titan, then hunter
+				360Controller.Buttons.RB.SetState(true) ; throw melee
+			}
+			Sleep 500 ; this delay is for both anti-afk every 150 casts and allowing the ability to be cast (ability sometimes does not cast if no delay between button set true and set false)
+			360Controller.Axes.LY.SetState(50) ; stop moving backwards
+			360Controller.Buttons.LB.SetState(false) ; stop throwing grenade 
+			360Controller.Buttons.RB.SetState(false) ; stop throwing melee
+			Sleep % delayInput ; delayInput = delay set in the menu
+		}
+	}
+	
+Return
+
+stop_bind:
+	Reload
+Return
+
+close_bind:
+	ExitApp
+Return
 
 menu_bind:
     Suspend, Permit
@@ -3208,39 +3271,4 @@ menu_bind:
             Suspend, Toggle
         }
     }
-Return
-
-start_bind:
-	status = 1
-	if(titan_enable) {
-		Loop {
-			360Controller.Axes.LY.SetState(0)
-			Loop 150 {
-				360Controller.Buttons.LB.SetState(true)
-				Sleep 500
-				360Controller.Axes.LY.SetState(50)
-				360Controller.Buttons.LB.SetState(false) 
-				Sleep % timeInput
-			}
-		}
-	} else { ; yes this could just be inside of the loop, no i do not care
-		Loop {
-			360Controller.Axes.LY.SetState(0)
-			Loop 150 {
-				360Controller.Buttons.RB.SetState(true)
-				Sleep 500
-				360Controller.Axes.LY.SetState(50)
-				360Controller.Buttons.RB.SetState(false) 
-				Sleep % timeInput
-			}
-		}
-	}
-Return
-
-pause_bind:
-	Reload
-Return
-
-close_bind:
-	ExitApp
 Return
