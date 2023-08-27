@@ -2394,10 +2394,9 @@ html =
 					<input class="balloon" id="startInput" type="text" readonly>
 					<label for="startInput">Start</label>
 				</span>
-
                 <span>
                     <input class="balloon" id="stopInput" type="text" readonly>
-                    <label for="stopInput">Reload</label>
+                    <label for="stopInput">Stop</label>
                 </span>
 				<span>
 					<input class="balloon" id="closeInput" type="text" readonly>
@@ -2854,7 +2853,7 @@ table {
 /* Toggler Styles */
 #toggler {
     outline: 0;
-    width: 215px;
+    width: 235px;
     transition-duration: 0.4s;
     cursor: pointer;
     text-align: center;
@@ -3120,7 +3119,7 @@ js =
 	
 )
 
-title = Antra's Tabbed Out XP Script v1.1.1
+title = Antra's Tabbed Out XP Script v1.1.2
 ;make da neutron
 neutron := new NeutronWindow(html, css, js, title)
 ;add some settings, both self explanatory
@@ -3236,17 +3235,19 @@ writetoini:
 return
 
 UpdateOverlay:
-	WinGetPos, x, y, w, h, ahk_exe destiny2.exe
-	font_size := h/32 ; auto scale overlay text by the height of the destiny 2 window
-	if (overlay.beginDraw()) { ; if we can draw the overlay... (is d2 active? did the class load correctly?)
-		inputs := "| " closeInput " - Close Script | " menuInput " - Options Menu |"
-		switch status {
-			case 0: ; script is not started
-				overlay.drawText("| " . startInput . " - Start Script " . inputs, 10, 0, font_size, 0xFFFFFFFF, "Courier", "olFF000000")
-			case 1: ; script is started
-				overlay.drawText("| You may now tab out | " . stopInput . " - Stop Script " . inputs, 10, 0, font_size, 0xFFFFFFFF, "Courier" , "olFF000000")
+	if WinExist("ahk_exe destiny2.exe") {
+		WinGetPos, x, y, w, h, ahk_exe destiny2.exe
+		font_size := h/32 ; auto scale overlay text by the height of the destiny 2 window
+		if (overlay.beginDraw()) { ; if we can draw the overlay... (is d2 active? did the class load correctly?)
+			inputs := "| " closeInput " - Close Script | " menuInput " - Options Menu |"
+			switch status {
+				case 0: ; script is not started
+					overlay.drawText("| " . startInput . " - Start Script " . inputs, 10, 0, font_size, 0xFFFFFFFF, "Courier", "olFF000000")
+				case 1: ; script is started
+					overlay.drawText("| You may now tab out | " . stopInput . " - Stop Script " . inputs, 10, 0, font_size, 0xFFFFFFFF, "Courier" , "olFF000000")
+			}
+			overlay.EndDraw() ; now the overlay has been drawn, end draw... (show it)
 		}
-		overlay.EndDraw() ; now the overlay has been drawn, end draw... (show it)
 	}
 return
 
