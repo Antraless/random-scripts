@@ -3052,7 +3052,7 @@ html =
             </div>
         </fieldset>
 		<div class="subtext">
-			<span class="lighttext">This script is designed for Primary weapons. You need the "In The Deep" mission CP.</span>
+			<span class="lighttext">This script is designed for Primary ammo weapons. You need the "In The Deep" mission CP.</span>
 		</div>
 		<div class="row">
 			<p class="alerttext" id="alert1"></p>
