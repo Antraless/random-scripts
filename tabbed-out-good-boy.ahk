@@ -2076,7 +2076,7 @@ UpdateOverlay:
 		WinGetPos, x, y, w, h, ahk_exe destiny2.exe
 		font_size := h/32 ; auto scale overlay text by the height of the destiny 2 window
 		if (overlay.beginDraw()) { ; if we can draw the overlay... (is d2 active? did the class load correctly?)
-			inputs := "| " closeInput " - Close Script | "
+			inputs := "| " closeInput " - Close Script | discord.gg/KGyjysA5WY |"
 			switch status {
 				case 0: ; script is not started
 					overlay.drawText("| " . startInput . " - Start Script " . inputs, 10, 0, font_size, 0xFFFFFFFF, "Courier", "olFF000000")
