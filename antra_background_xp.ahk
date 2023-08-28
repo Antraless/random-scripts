@@ -3759,32 +3759,40 @@ js =
 	
 )
 
+
 title = Antra's Tabbed Out XP Script v1.2.0
 ;make da neutron
 neutron := new NeutronWindow(html, css, js, title)
-;add some settings, both self explanatory
+;add some settings to the gui (always on top )
 neutron.Gui("+LabelNeutron +AlwaysOnTop -Resize")
+
 
 ;make a vigem virtual 360 controller
 360Controller := new ViGEmXb360()
 
+
 ;make an overlay that is attached to d2 and only active while d2 is active
 overlay := new ShinsOverlayClass("ahk_exe destiny2.exe")
+
 
 ; set the directory for settings
 ini_directory := A_Temp "\xpStuff.ini"
 
+
 ;read settings for the script
 gosub, readfromini
 
+
 ;set status as 0 e.g. not started for the overlay
 status = 0
+
 
 ;update the overlay every 1000ms
 SetTimer, UpdateOverlay, 1000
 ;now go to the overlay straight after setting the timer for initial load
 gosub, UpdateOverlay
 return
+
 
 ; neutron events, from clicking links/buttons/blah blah...
 antraClicked(neutron, event)
@@ -3793,11 +3801,13 @@ antraClicked(neutron, event)
 	Run, https://ko-fi.com/Antrament
 }
 
+
 discordClicked(neutron, event)
 {
     event.preventDefault()
 	Run, https://discord.gg/KGyjysA5WY
 }
+
 
 closeButton(neutron, event)
 {
@@ -3808,6 +3818,7 @@ closeButton(neutron, event)
 		Suspend, Toggle
 	}
 }
+
 
 Submitted(neutron, event)
 {
@@ -3862,6 +3873,7 @@ readfromini:
 	}
 return
 
+
 writetoini:
 	iniwrite, %startInput%, %ini_directory%, xpScriptBinds, startInput
 	iniwrite, %stopInput%, %ini_directory%, xpScriptBinds, stopInput
@@ -3878,15 +3890,16 @@ writetoini:
 	}
 return
 
+
 UpdateOverlay:
 	if WinExist("ahk_exe destiny2.exe") {
 		WinGetPos, x, y, w, h, ahk_exe destiny2.exe
 		font_size := h/32 ; auto scale overlay text by the height of the destiny 2 window
 		if (overlay.beginDraw()) { ; if we can draw the overlay... (is d2 active? did the class load correctly?)
-			inputs := "| " closeInput " - Close Script | " menuInput " - Options Menu |"
-			if(show) {
-				show_warning := "`nYour menu is open, so binds will not work. Press " menuInput " to close it!"
-			} else {
+			inputs := "| " closeInput " - Close Script | " menuInput " - Info/Settings Menu |"
+			if(show) { ; menu is shown... warn user
+				show_warning := "`nYour Menu is open, so binds will not work. Press " menuInput " to close it!"
+			} else { ; menu is not shown... no warning
 				show_warning := ""
 			}
 			switch status {
@@ -3900,6 +3913,7 @@ UpdateOverlay:
 	}
 return
 
+
 start_bind:
 	status = 1
 	Loop {
@@ -3910,7 +3924,7 @@ start_bind:
 			} else { ; if not titan, then hunter
 				360Controller.Buttons.RB.SetState(true) ; throw melee
 			}
-			Sleep 500 ; this delay is for both anti-afk every 150 casts and allowing the ability to be cast (ability sometimes does not cast if no delay between button set true and set false)
+			Sleep 500 ; this delay is for both anti-afk every 100 casts AND allowing the ability to be cast (ability sometimes does not cast if no delay between button set true and set false)
 			360Controller.Axes.LY.SetState(50) ; stop moving backwards
 			360Controller.Buttons.LB.SetState(false) ; stop throwing grenade 
 			360Controller.Buttons.RB.SetState(false) ; stop throwing melee
@@ -3920,16 +3934,18 @@ start_bind:
 	
 Return
 
+
 stop_bind:
 	Reload
 Return
+
 
 close_bind:
 	exitapp
 Return
 
 menu_bind:
-    Suspend, Permit
+Suspend, Permit
     if (!show) {
         show = 1
         neutron.Show("h450")
