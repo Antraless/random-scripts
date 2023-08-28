@@ -3739,11 +3739,25 @@ start_bind:
 	Sleep 500
 	360Controller.Axes.LT.setState(0)
 	Loop {
+		360Controller.Axes.LX.SetState(0)
+		Sleep 10
+		360Controller.Axes.LX.SetState(100)
+		Sleep 10
+		360Controller.Axes.LX.SetState(50)
+		Sleep 10
+		360Controller.Axes.LX.SetState(100)
+		Sleep 10
+		360Controller.Axes.LX.SetState(0)
+		Sleep 10
+		360Controller.Axes.LX.SetState(50)
+		Sleep 10
 		360Controller.Axes.LY.SetState(0) ; move backwards
-		Loop 50 { ; 50 is a reasonable amount of shooty sessions to do before going back to the main loop to move backwards again for anti-afk
+		360Controller.Axes.RY.SetState(0) ; look down	
+		Loop 30 { ; 30 is a reasonable amount of shooty sessions to do before going back to the main loop to move backwards again for anti-afk
 			360Controller.Axes.RT.SetState(100) ; shoot
 			Sleep 500 ; this delay is for anti-afk every 50 shooty sessions casts
 			360Controller.Axes.LY.SetState(50) ; stop moving backwards
+			360Controller.Axes.RY.SetState(50)	; stop looking
 			Sleep 3000
 			360Controller.Axes.RT.SetState(0) ; stop shooting
 		}
