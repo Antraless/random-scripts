@@ -3896,7 +3896,7 @@ UpdateOverlay:
 		WinGetPos, x, y, w, h, ahk_exe destiny2.exe
 		font_size := h/32 ; auto scale overlay text by the height of the destiny 2 window
 		if (overlay.beginDraw()) { ; if we can draw the overlay... (is d2 active? did the class load correctly?)
-			inputs := "| " closeInput " - Close Script | " menuInput " - Info/Settings Menu |"
+			inputs := "| " closeInput " - Close Script | " menuInput " - Info/Settings Menu | discord.gg/KGyjysA5WY |"
 			if(show) { ; menu is shown... warn user
 				show_warning := "`nYour Menu is open, so binds will not work. Press " menuInput " to close it!"
 			} else { ; menu is not shown... no warning
