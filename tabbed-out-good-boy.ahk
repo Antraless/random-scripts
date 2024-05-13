@@ -6,14 +6,17 @@
 setbatchlines, -1 ; never automatically sleep, not really necessary here but who cares
 setworkingdir %a_scriptdir% ; read files from the scripts directory
 
+; v Set how many times you want to pet, if not set, it will pet until stopped (...or like 800 days) v
+numPets := 9999999
+; ^ Set how many times you want to pet, if not set, it will pet until stopped ^
 
-; Set your binds here!
+; v Set your binds here v
 startInput := "F4"
 
 stopInput :=  "F5"
 
 closeInput := "F8"
-; Set your binds here!
+; ^ Set your binds here ^
 
 
 
@@ -2090,11 +2093,11 @@ return
 
 start_bind:
 	status = 1
-	loop {
+	loop %numPets% {
 		360Controller.Buttons.X.SetState(true)
-		Sleep, 600
+		Sleep, 800
 		360Controller.Buttons.X.SetState(false)
-		Sleep, 300
+		Sleep, 6000
 		360Controller.Axes.RY.SetState(0)
 		Sleep 300
 		360Controller.Axes.RY.SetState(100)
