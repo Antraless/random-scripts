@@ -2741,11 +2741,6 @@ return
 
 start_bind:
 	status = 1
-	loop {
-		360Controller.Buttons.X.SetState(true)
-		Sleep, 600
-		360Controller.Buttons.X.SetState(false)
-		Sleep, 300
 	loop %numPets% {
 		360Controller.Buttons.X.SetState(true)
 		Sleep, 800
