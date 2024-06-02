@@ -3111,6 +3111,7 @@ html =
 			</span>
 		</div>
 		<div class="subtext">
+			<span class="lighttext">Checkpoint bot: <a id="copyJoinCode" href="#">/join CPBot#6289</a> - Bot's down or full? Ask in our Discord!</span>
 			<span class="lighttext">Checkpoint bot: <a id="copyJoinCode" href="#">/join Golg Maze CP#9613</a> - Bot's down or full? Ask in our Discord!</span>
 		</div>
 		<div id="copy_modal" class="modal">
