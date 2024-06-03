@@ -2939,6 +2939,10 @@ Loop {
     Sleep, 100
     360Controller.buttons.a.setState(false)
 	Sleep, 100
+	360Controller.Axes.RY.SetState(0)
+	Sleep 100
+	360Controller.Axes.RY.SetState(50)
+	Sleep 100
 }
 Return
 
