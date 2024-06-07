@@ -1,4 +1,4 @@
-; <3 from antra! https://discord.gg/KGyjysA5WY
+; <3 from antra! https://thrallway.com/
 #noenv ; improves performance by maybe like 0.01% by not loading environment variables
 #singleinstance force ; only allow one of this script to be open at once
 #persistent ; run the script until an exitapp is encountered
@@ -803,7 +803,7 @@ class ViGEmWrapper {
 			MsgBox,4,Antra's Background XP Script, The ViGEm installer is now in the same place as this script.`n`nPress yes if you need help!
 			IfMsgBox, Yes
 			{
-				Run, https://discord.gg/KGyjysA5WY
+				Run, https://thrallway.com/
 				exitapp
 			}
 			else
@@ -829,7 +829,7 @@ class ViGEmTarget {
 			msgbox,4,Antra's Background XP Script, The .dll failed to load!`n`nPress yes if you need help!
 			IfMsgBox, Yes
 			{
-				Run, https://discord.gg/KGyjysA5WY
+				Run, https://thrallway.com/
 				exitapp
 			}
 			else
@@ -3234,6 +3234,7 @@ html =
 						<h2>Titan Build Info</h2>
 						<p><span>Exotic:</span>Ashens Wake</p>
 						<p><span>Grenade:</span>Fusion Grenade</p>
+						<p><span>Mods:</span>3x Grenade Kickstart</p>
 						<p><span>Aspect/Fragment:</span>DO NOT use the Sol Invictus aspect</p>
 						<span class="lighttext">100 Discpline is nice but not required!</span><br>
 						<button class="smallbutton" id="titan_build_close_button" type="button">Close</button>
@@ -3252,6 +3253,7 @@ html =
 						<h2>Hunter Build Info</h2>
 						<p><span>Exotic:</span>Ophidia Spathe or Caliban's Hand</p>
 						<p><span>Melee:</span>Proximity Explosive Knife</p>
+						<p><span>Mods:</span>3x Melee Kickstart</p>
 						<p><span>Aspect/Fragment:</span>Knock 'Em Down and Ember of Torches</p>
 						<span class="lighttext">100 Strength is nice but not required!</span><br>
 						<button class="smallbutton" id="hunter_build_close_button" type="button">Close</button>
@@ -3932,10 +3934,6 @@ neutron.Gui("+LabelNeutron +AlwaysOnTop -Resize")
 360Controller := new ViGEmXb360()
 
 
-;make an overlay that is attached to d2 and only active while d2 is active
-overlay := new ShinsOverlayClass("ahk_exe destiny2.exe")
-
-
 ; set the directory for settings
 ini_directory := A_Temp "\xpStuff.ini"
 
@@ -3948,7 +3946,6 @@ gosub, readfromini
 status = 0
 
 
-;update the overlay every 1000ms
 SetTimer, UpdateOverlay, 1000
 ;now go to the overlay straight after setting the timer for initial load
 gosub, UpdateOverlay
@@ -3966,7 +3963,7 @@ antraClicked(neutron, event)
 discordClicked(neutron, event)
 {
     event.preventDefault()
-	Run, https://discord.gg/KGyjysA5WY
+	Run, https://thrallway.com/
 }
 
 
@@ -4053,7 +4050,8 @@ return
 
 
 UpdateOverlay:
-	if WinExist("ahk_exe destiny2.exe") {
+	if WinActive("ahk_exe destiny2.exe") {
+	overlay := new ShinsOverlayClass("ahk_exe destiny2.exe")
 		WinGetPos, x, y, w, h, ahk_exe destiny2.exe
 		font_size := h/32 ; auto scale overlay text by the height of the destiny 2 window
 		if (overlay.beginDraw()) { ; if we can draw the overlay... (is d2 active? did the class load correctly?)
@@ -4071,6 +4069,8 @@ UpdateOverlay:
 			}
 			overlay.EndDraw() ; now the overlay has been drawn, end draw... (show it)
 		}
+	} else {
+		overlay := ""
 	}
 return
 
