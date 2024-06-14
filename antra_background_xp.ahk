@@ -3234,7 +3234,6 @@ html =
 						<h2>Titan Build Info</h2>
 						<p><span>Exotic:</span>Ashens Wake</p>
 						<p><span>Grenade:</span>Fusion Grenade</p>
-						<p><span>Mods:</span>3x Grenade Kickstart</p>
 						<p><span>Aspect/Fragment:</span>DO NOT use the Sol Invictus aspect</p>
 						<span class="lighttext">100 Discpline is nice but not required!</span><br>
 						<button class="smallbutton" id="titan_build_close_button" type="button">Close</button>
