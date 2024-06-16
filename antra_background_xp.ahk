@@ -3974,6 +3974,7 @@ gosub, readfromini
 ;set status as 0 e.g. not started for the overlay
 status = 0
 
+overlay := new ShinsOverlayClass("ahk_exe destiny2.exe")
 
 SetTimer, UpdateOverlay, 1000
 ;now go to the overlay straight after setting the timer for initial load
@@ -4080,7 +4081,6 @@ return
 
 UpdateOverlay:
 	if WinActive("ahk_exe destiny2.exe") {
-	overlay := new ShinsOverlayClass("ahk_exe destiny2.exe")
 		WinGetPos, x, y, w, h, ahk_exe destiny2.exe
 		font_size := h/32 ; auto scale overlay text by the height of the destiny 2 window
 		if (overlay.beginDraw()) { ; if we can draw the overlay... (is d2 active? did the class load correctly?)
@@ -4099,9 +4099,11 @@ UpdateOverlay:
 			overlay.EndDraw() ; now the overlay has been drawn, end draw... (show it)
 		}
 	} else {
-		overlay := ""
+		if (overlay.beginDraw()) {
+			overlay.enddraw()
+		}
 	}
-return
+Return
 
 
 start_bind:
