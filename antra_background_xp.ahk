@@ -944,7 +944,6 @@ class ViGEmXb360 extends ViGEmTarget {
 ;
 ;
 ; Special thanks to teadrinker for helping me understand some 64bit param structures! -> https://www.autohotkey.com/boards/viewtopic.php?f=76&t=105420
-
 ;Direct2d overlay class by Spawnova (5/27/2022)
 ;https://github.com/Spawnova/ShinsOverlayClass
 ;
@@ -1048,7 +1047,7 @@ class ShinsOverlayClass {
 		this.hwnd := hwnd
 		DllCall("ShowWindow","Uptr",this.hwnd,"uint",(clickThrough ? 8 : 1))
 
-		OnMessage(0x14,this.OnErase.Bind(this))
+		OnMessage(0x14,"ShinsOverlayClass_OnErase")
 
 		this.tBufferPtr := this.SetVarCapacity("ttBuffer",4096)
 		this.rect1Ptr := this.SetVarCapacity("_rect1",64)
@@ -2219,9 +2218,9 @@ class ShinsOverlayClass {
 			return p
 		DllCall("GlobalFree", "ptr", p)
 	}
-	OnErase() {
-		return 0
-	}
+}
+ShinsOverlayClass_OnErase() {
+	return 0
 }
 
 ; Neutron.ahk v1.0.0
