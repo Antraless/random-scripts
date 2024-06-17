@@ -944,7 +944,6 @@ class ViGEmXb360 extends ViGEmTarget {
 ;
 ;
 ; Special thanks to teadrinker for helping me understand some 64bit param structures! -> https://www.autohotkey.com/boards/viewtopic.php?f=76&t=105420
-
 ;Direct2d overlay class by Spawnova (5/27/2022)
 ;https://github.com/Spawnova/ShinsOverlayClass
 ;
@@ -1048,7 +1047,7 @@ class ShinsOverlayClass {
 		this.hwnd := hwnd
 		DllCall("ShowWindow","Uptr",this.hwnd,"uint",(clickThrough ? 8 : 1))
 
-		OnMessage(0x14,this.OnErase.Bind(this))
+		OnMessage(0x14,"ShinsOverlayClass_OnErase")
 
 		this.tBufferPtr := this.SetVarCapacity("ttBuffer",4096)
 		this.rect1Ptr := this.SetVarCapacity("_rect1",64)
@@ -2219,9 +2218,9 @@ class ShinsOverlayClass {
 			return p
 		DllCall("GlobalFree", "ptr", p)
 	}
-	OnErase() {
-		return 0
-	}
+}
+ShinsOverlayClass_OnErase() {
+	return 0
 }
 
 ; Neutron.ahk v1.0.0
@@ -3974,7 +3973,6 @@ gosub, readfromini
 ;set status as 0 e.g. not started for the overlay
 status = 0
 
-overlay := new ShinsOverlayClass("ahk_exe destiny2.exe")
 
 SetTimer, UpdateOverlay, 1000
 ;now go to the overlay straight after setting the timer for initial load
@@ -4081,6 +4079,7 @@ return
 
 UpdateOverlay:
 	if WinActive("ahk_exe destiny2.exe") {
+	overlay := new ShinsOverlayClass("ahk_exe destiny2.exe")
 		WinGetPos, x, y, w, h, ahk_exe destiny2.exe
 		font_size := h/32 ; auto scale overlay text by the height of the destiny 2 window
 		if (overlay.beginDraw()) { ; if we can draw the overlay... (is d2 active? did the class load correctly?)
@@ -4099,9 +4098,7 @@ UpdateOverlay:
 			overlay.EndDraw() ; now the overlay has been drawn, end draw... (show it)
 		}
 	} else {
-		if (overlay.beginDraw()) {
-			overlay.enddraw()
-		}
+		overlay := ""
 	}
 Return
 
