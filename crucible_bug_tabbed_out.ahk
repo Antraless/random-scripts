@@ -2974,7 +2974,7 @@ F4::
 		360Controller.Buttons.A.SetState(false)
 		Sleep, 500
 		360Controller.Buttons.Y.SetState(true)
-		Sleep, 6000
+		Sleep, 8000
 		360Controller.Buttons.Y.SetState(false)
 		Sleep, 2500
     }
