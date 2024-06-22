@@ -2969,14 +2969,14 @@ F4::
         Sleep, 500
         360Controller.Axes.LY.SetState(50)    ; Stop moving down
         Sleep, 100
-		360Controller.Buttons.A.SetState(true)
-		Sleep, 100
-		360Controller.Buttons.A.SetState(false)
-		Sleep, 500
-		360Controller.Buttons.Y.SetState(true)
-		Sleep, 4000
-		360Controller.Buttons.Y.SetState(false)
-		Sleep, 2500
+	360Controller.Buttons.A.SetState(true)
+	Sleep, 100
+	360Controller.Buttons.A.SetState(false)
+	Sleep, 500
+	360Controller.Buttons.Y.SetState(true)
+	Sleep, 8000
+	360Controller.Buttons.Y.SetState(false)
+	Sleep, 2500
     }
 Return
 
