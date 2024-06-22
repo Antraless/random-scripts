@@ -2956,11 +2956,11 @@ F4::
         360Controller.Buttons.Start.SetState(true)
         Sleep, 500
         360Controller.Buttons.Start.SetState(false)
-        Sleep, 500
+        Sleep, 1000
         360Controller.Buttons.B.SetState(true)
         Sleep, 100
         360Controller.Buttons.B.SetState(false) 
-        Sleep, 500
+        Sleep, 1000
         360Controller.Axes.LX.SetState(100)  ; Move right to max
         Sleep, 750
         360Controller.Axes.LX.SetState(50)    ; Stop moving right
