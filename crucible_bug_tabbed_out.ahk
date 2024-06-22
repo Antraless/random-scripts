@@ -2940,6 +2940,18 @@ return
 
 F4::
     Status = 1
+	360Controller.Buttons.LB.SetState(true)
+	Sleep, 100
+	360Controller.Buttons.LB.SetState(false)
+	Sleep, 100
+	360Controller.Buttons.LB.SetState(true)
+	Sleep, 100
+	360Controller.Buttons.LB.SetState(false)
+	Sleep, 100
+	360Controller.Buttons.LB.SetState(true)
+	Sleep, 100
+	360Controller.Buttons.LB.SetState(false)
+	Sleep, 100
     Loop {
         360Controller.Buttons.Start.SetState(true)
         Sleep, 500
@@ -2964,7 +2976,7 @@ F4::
 		360Controller.Buttons.Y.SetState(true)
 		Sleep, 4000
 		360Controller.Buttons.Y.SetState(false)
-		Sleep, 500
+		Sleep, 2500
     }
 Return
 
