@@ -5,6 +5,7 @@
 #Requires AutoHotkey >=1.1.36 <1.2
 #NoEnv
 #Persistent
+#ifwinactive ahk_exe destiny2.exe ; only have hotkeys work if d2 is active
 #SingleInstance, Force
 status = 0
 
