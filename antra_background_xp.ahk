@@ -800,7 +800,7 @@ class ViGEmWrapper {
 		} catch Error {
 			MsgBox,0x40,Antra's Background XP Script, You do not have ViGEm installed!
 			UrlDownloadToFile, https://github.com/Antraless/tabbed-out-fishing/raw/main/ViGEmBus_1.21.442_x64_x86_arm64.exe, ViGEmBus_1.21.442_x64_x86_arm64.exe
-			MsgBox,4,Antra's Background XP Script, The ViGEm installer is now in the same place as this script.`n`nPress yes if you need help!
+			MsgBox,4,Antra's Background XP Script, Please check the folder that this script is in for the ViGEmBus installer, and run it.`n`nPress yes if you need help!
 			IfMsgBox, Yes
 			{
 				Run, https://thrallway.com/
