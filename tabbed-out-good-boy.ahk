@@ -2083,9 +2083,9 @@ start_bind:
 	status = 1
 	loop %numPets% {
 		360Controller.Buttons.X.SetState(true)
-		Sleep, 800
+		Sleep, 700
 		360Controller.Buttons.X.SetState(false)
-		Sleep, 6000
+		Sleep, 300
 		360Controller.Axes.RY.SetState(0)
 		Sleep 300
 		360Controller.Axes.RY.SetState(100)
